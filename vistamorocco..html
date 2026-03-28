@@ -1,0 +1,2492 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VistaMorocco — Réservez au Maroc</title>
+
+<!-- PWA Meta -->
+<meta name="theme-color" content="#1A1209">
+<meta name="description" content="Réservez riads, restaurants, excursions et activités au Maroc.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VistaMorocco">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%231A1209'/><text x='256' y='340' font-size='260' text-anchor='middle' fill='%23D4A843'>✦</text></svg>">
+
+<!-- PWA Manifest (inline via blob) -->
+<script>
+(function(){
+  const manifest = {
+    name: "VistaMorocco",
+    short_name: "VistaMorocco",
+    description: "Réservez riads, restaurants, excursions et activités au Maroc.",
+    start_url: "./",
+    display: "standalone",
+    background_color: "#1A1209",
+    theme_color: "#1A1209",
+    orientation: "portrait-primary",
+    icons: [
+      { src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='100' fill='%231A1209'/><text x='256' y='340' font-size='260' text-anchor='middle' fill='%23D4A843'>✦</text></svg>", sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
+    ],
+    screenshots: [],
+    categories: ["travel","lifestyle"]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('link');
+  link.rel = 'manifest'; link.href = url;
+  document.currentScript.after(link);
+})();
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Jost',sans-serif;background:#FAF6EE;color:#1A1209;overflow-x:hidden}
+
+:root{
+  --terra:#C4622D; --terra-dk:#9c4820; --terra-lt:#F5ECD7;
+  --gold:#D4A843; --midnight:#1A1209; --sand:#F5ECD7;
+  --cream:#FAF6EE; --muted:#7A6A52; --border:#E8D9BE;
+  --green:#2d7a4f; --white:#fff; --r:12px;
+  --sh:0 2px 16px rgba(26,20,16,.08); --sh-lg:0 8px 40px rgba(26,20,16,.14);
+}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:64px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(26,20,16,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(212,168,67,.15)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+.logo-icon{width:38px;height:38px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--midnight);font-weight:700;flex-shrink:0}
+.logo-txt{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff;letter-spacing:1px}
+.logo-txt span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-link{color:rgba(255,255,255,.75);font-size:14px;font-weight:500;cursor:pointer;transition:color .2s}
+.nav-link:hover{color:var(--gold)}
+.nav-actions{display:flex;align-items:center;gap:10px}
+.btn-ghost{padding:8px 16px;border-radius:8px;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:#fff;font-family:'Jost',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-primary{padding:8px 20px;border-radius:8px;border:none;background:var(--gold);color:var(--midnight);font-family:'Jost',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-primary:hover{background:var(--terra);color:#fff}
+.user-badge{display:flex;align-items:center;gap:8px;padding:5px 14px 5px 5px;border-radius:50px;border:1.5px solid rgba(255,255,255,.2);cursor:pointer}
+.user-av{width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--midnight);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.user-nm{font-size:13px;font-weight:600;color:#fff}
+.hamburger{display:none;background:none;border:none;cursor:pointer;font-size:20px;color:#fff}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:block}}
+
+/* PAGES */
+.page{display:none;min-height:100vh;padding-top:64px}
+.page.active{display:block}
+
+/* HERO */
+.hero{min-height:90vh;position:relative;display:flex;align-items:center;justify-content:center;padding:80px 5% 60px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 1.2s ease}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.5s ease}
+.hero-slide.active{opacity:1}
+.hero-dots{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+.hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);border:none;cursor:pointer;transition:all .3s}
+.hero-dot.active{background:var(--gold);width:24px;border-radius:4px}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(160deg,rgba(26,20,16,.88) 0%,rgba(45,20,5,.75) 100%)}
+.hero-cnt{position:relative;z-index:2;text-align:center;max-width:740px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(212,168,67,.12);border:1px solid rgba(212,168,67,.35);color:var(--gold);padding:6px 18px;border-radius:50px;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:24px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7vw,80px);color:#fff;font-weight:600;line-height:1.05;margin-bottom:18px;letter-spacing:-1px}
+.hero h1 em{color:var(--gold);font-style:italic}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.6);line-height:1.75;max-width:520px;margin:0 auto 36px}
+
+/* SEARCH BOX */
+.search-box{background:#fff;border-radius:16px;padding:6px;display:flex;gap:0;align-items:stretch;box-shadow:0 20px 60px rgba(0,0,0,.4);max-width:800px;margin:0 auto;flex-wrap:wrap}
+.sf{flex:1;min-width:130px;padding:10px 14px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:3px}
+.sf:last-of-type{border-right:none}
+.sf-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.sf select,.sf input{border:none;outline:none;font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:var(--midnight);background:transparent;width:100%}
+.btn-search{padding:14px 26px;border-radius:10px;border:none;background:var(--terra);color:#fff;font-family:'Jost',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:8px;margin:4px;white-space:nowrap}
+.btn-search:hover{background:var(--terra-dk);transform:translateY(-2px);box-shadow:0 8px 24px rgba(196,98,45,.45)}
+.cities-strip{position:relative;z-index:2;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.city-pill{padding:7px 16px;border-radius:50px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;font-size:13px;font-weight:500;cursor:pointer;transition:all .2s}
+.city-pill:hover{background:rgba(212,168,67,.25);border-color:var(--gold);color:var(--gold)}
+@media(max-width:600px){.search-box{flex-direction:column}.sf{border-right:none;border-bottom:1px solid var(--border)}.sf:last-of-type{border-bottom:none}}
+
+/* STATS */
+.stats-bar{background:var(--midnight);padding:28px 5%}
+.stats-inner{max-width:1160px;margin:0 auto;display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;color:var(--gold);text-align:center}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-top:2px}
+
+/* SECTIONS */
+.sec{padding:64px 5%}
+.sec-inner{max-width:1160px;margin:0 auto}
+.sec-alt{background:var(--sand)}
+.sec-dark{background:linear-gradient(160deg,#0a0e14,#061010)}
+.sec-white{background:#fff}
+.eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--terra);margin-bottom:8px}
+.eyebrow-light{color:rgba(212,168,67,.8)}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,46px);font-weight:700;color:var(--midnight);line-height:1.15;margin-bottom:10px}
+.sec-title em{color:var(--terra);font-style:italic}
+.sec-title-light{color:#fff}
+.sec-title-light em{color:var(--gold)}
+.ornament{display:flex;align-items:center;gap:10px;margin:10px 0 0}
+.orn-line{height:1px;flex:1;background:var(--gold);opacity:.4}
+.orn-star{color:var(--gold);font-size:9px;opacity:.7}
+
+/* CATEGORY GRID */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-top:28px}
+.cat-card{border-radius:16px;overflow:hidden;cursor:pointer;transition:all .25s;position:relative;height:180px;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.cat-card:hover{transform:translateY(-5px);box-shadow:0 12px 40px rgba(0,0,0,.2)}
+.cat-card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.cat-card:hover img{transform:scale(1.08)}
+.cat-card-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,20,16,.88) 0%,rgba(26,20,16,.2) 60%,transparent 100%)}
+.cat-card-body{position:absolute;bottom:0;left:0;right:0;padding:14px 16px}
+.cat-icon{font-size:22px;margin-bottom:4px}
+.cat-name{font-size:15px;font-weight:700;color:#fff;margin-bottom:2px;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.cat-count{font-size:11px;color:rgba(255,255,255,.65)}
+
+/* HOTEL CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;margin-top:28px}
+.card{background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--border);transition:all .3s;cursor:pointer}
+.card:hover{transform:translateY(-6px);box-shadow:var(--sh-lg);border-color:transparent}
+.card-img{position:relative;height:220px;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover .card-img img{transform:scale(1.06)}
+.c-badge{position:absolute;top:12px;left:12px;padding:4px 10px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;background:var(--gold);color:var(--midnight)}
+.c-badge.red{background:var(--terra);color:#fff}
+.c-badge.grn{background:var(--green);color:#fff}
+.c-save{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--muted);transition:all .2s}
+.c-save:hover,.c-save.on{color:#e74c3c}
+.card-body{padding:16px}
+.c-city{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--terra);margin-bottom:5px}
+.c-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:var(--midnight);margin-bottom:8px;line-height:1.25}
+.c-rating{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.c-stars{color:var(--gold);font-size:13px}
+.c-rnum{font-size:13px;font-weight:700;color:var(--midnight)}
+.c-rcnt{font-size:12px;color:var(--muted)}
+.c-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.tag{padding:3px 10px;border-radius:50px;font-size:11px;font-weight:500;background:var(--terra-lt);color:var(--terra)}
+.card-foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:12px}
+.c-pfrom{font-size:11px;color:var(--muted);margin-bottom:1px}
+.c-price{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--terra)}
+.c-punit{font-size:12px;color:var(--muted)}
+.btn-rsv{padding:9px 18px;border-radius:8px;border:none;background:var(--terra);color:#fff;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-rsv:hover{background:var(--terra-dk)}
+
+/* PAGE HEADER */
+.ph{background:linear-gradient(160deg,var(--midnight) 0%,#2a1205 100%);padding:52px 5% 44px}
+.ph-inner{max-width:1160px;margin:0 auto}
+.bc{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.35);margin-bottom:12px}
+.bc span{cursor:pointer;transition:color .2s}.bc span:hover{color:var(--gold)}
+.bc i{font-size:9px}
+.ph h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,56px);font-weight:700;color:#fff;margin-bottom:6px}
+.ph h1 em{color:var(--gold);font-style:italic}
+.ph p{color:rgba(255,255,255,.45);font-size:15px}
+
+/* LISTINGS PAGE */
+.list-wrap{max-width:1160px;margin:0 auto;padding:24px 5% 80px}
+.list-bar{background:#fff;border-radius:12px;padding:6px;display:flex;gap:0;border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:20px;flex-wrap:wrap}
+.list-bar select{flex:1;min-width:120px;padding:10px 14px;border:none;border-right:1px solid var(--border);font-family:'Jost',sans-serif;font-size:13px;color:var(--midnight);background:#fff;outline:none;cursor:pointer}
+.list-bar select:last-of-type{border-right:none}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding-bottom:16px;margin-bottom:24px;border-bottom:1px solid var(--border)}
+.fb{padding:8px 16px;border-radius:50px;border:1.5px solid var(--border);background:#fff;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;color:var(--midnight);cursor:pointer;transition:all .2s}
+.fb:hover,.fb.on{border-color:var(--terra);color:var(--terra);background:var(--terra-lt)}
+.res-cnt{margin-left:auto;font-size:13px;color:var(--muted)}
+
+/* DETAIL PAGE */
+.det-wrap{max-width:1160px;margin:0 auto;padding:32px 5% 80px}
+.gallery{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:220px 180px;gap:8px;border-radius:16px;overflow:hidden;margin-bottom:32px}
+.gi{overflow:hidden;cursor:pointer;position:relative}
+.gi:first-child{grid-row:1/3}
+.gi img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.gi:hover img{transform:scale(1.05)}
+.gi-more{position:absolute;inset:0;background:rgba(26,20,16,.55);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:700}
+.det-layout{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start}
+@media(max-width:900px){.det-layout{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:auto}.gi:first-child{grid-row:auto;grid-column:1/3}}
+@media(max-width:600px){.gallery{grid-template-columns:1fr}.gi:first-child{grid-column:auto}}
+.det-city{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.det-name{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,44px);font-weight:700;color:var(--midnight);margin-bottom:12px;line-height:1.1}
+.det-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.det-rating{display:flex;align-items:center;gap:6px;background:var(--gold);color:var(--midnight);padding:5px 12px;border-radius:8px;font-weight:700;font-size:14px}
+.det-desc{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:28px}
+.det-sec{margin-bottom:32px}
+.det-sec-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--midnight);margin-bottom:16px}
+.am-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:600px){.am-grid{grid-template-columns:repeat(2,1fr)}}
+.am{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.am i{color:var(--terra);width:16px;text-align:center}
+.rev-card{padding:16px;border-radius:var(--r);border:1px solid var(--border);background:#fff;margin-bottom:12px}
+.rev-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.rev-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#fff;flex-shrink:0}
+.rev-nm{font-weight:600;font-size:14px}
+.rev-dt{font-size:12px;color:var(--muted)}
+.rev-stars{color:var(--gold);font-size:12px}
+.rev-txt{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* BOOKING WIDGET */
+.bw{background:#fff;border-radius:20px;border:1px solid var(--border);padding:24px;box-shadow:var(--sh-lg);position:sticky;top:84px}
+.bw-price{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.bw-pval{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--terra)}
+.bw-punit{font-size:14px;color:var(--muted)}
+.bw-rating{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);padding-bottom:18px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.date-row{display:grid;grid-template-columns:1fr 1fr;border:1.5px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.df{padding:12px 14px}
+.df:first-child{border-right:1px solid var(--border)}
+.df-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:4px}
+.df input,.df select{border:none;outline:none;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;color:var(--midnight);width:100%;background:transparent}
+.g-field{border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.g-field .df-lbl{margin-bottom:0}
+.g-field select{border:none;outline:none;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;color:var(--midnight);background:transparent}
+.btn-book-now{width:100%;padding:15px;border-radius:12px;border:none;background:var(--terra);color:#fff;font-family:'Jost',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-book-now:hover{background:var(--terra-dk);transform:translateY(-2px);box-shadow:0 8px 24px rgba(196,98,45,.4)}
+.w-note{font-size:12px;color:var(--muted);text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
+.pb{border-top:1px solid var(--border);padding-top:14px;margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.pr{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+.pr.tot{font-weight:700;color:var(--midnight);font-size:15px;border-top:1px solid var(--border);padding-top:10px;margin-top:4px}
+
+/* SPORTS PAGE */
+.fb-banner{display:flex;align-items:center;gap:32px;background:linear-gradient(135deg,#071a0b,#0a2410 40%,#071a0b);border:1.5px solid rgba(0,200,83,.22);border-radius:20px;padding:32px 40px;cursor:pointer;position:relative;overflow:hidden;transition:all .3s;box-shadow:0 8px 40px rgba(0,200,83,.1)}
+.fb-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(0,200,83,.07),transparent 70%)}
+.fb-banner:hover{border-color:rgba(0,200,83,.55);transform:translateY(-3px);box-shadow:0 16px 60px rgba(0,200,83,.2)}
+.fb-ball-wrap{position:relative;width:80px;height:80px;flex-shrink:0}
+.fb-ball{width:70px;height:70px;border-radius:50%;animation:fbBounce 1.2s ease-in-out infinite;filter:drop-shadow(0 8px 16px rgba(0,0,0,.6))}
+.fb-ball-in{width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff 0%,#ddd 35%,#999 70%,#555 100%);border:2px solid rgba(0,0,0,.3);animation:fbSpin 1s linear infinite;box-shadow:inset -4px -4px 8px rgba(0,0,0,.4);position:relative;overflow:hidden}
+.fb-ball-in::after{content:'';position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(0,0,0,.2) 0deg 30deg,transparent 30deg 60deg)}
+@keyframes fbBounce{0%,100%{transform:translateY(0) scale(1,1)}40%{transform:translateY(-28px) scale(1.05,.95)}80%{transform:translateY(-4px) scale(.98,1.02)}}
+@keyframes fbSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.fb-txt{flex:1}
+.fb-ey{font-size:11px;color:#00c853;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;opacity:.8}
+.fb-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:4px;color:#fff;line-height:1;margin-bottom:8px;text-shadow:0 0 30px rgba(0,200,83,.3)}
+.fb-sub{font-size:14px;color:rgba(255,255,255,.5);margin-bottom:14px}
+.fb-feats{display:flex;gap:10px;flex-wrap:wrap}
+.fb-feats span{font-size:11px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(0,200,83,.1);border:1px solid rgba(0,200,83,.22);border-radius:50px;padding:4px 12px}
+.fb-cta-side{display:flex;flex-direction:column;align-items:center;gap:14px;flex-shrink:0}
+.fb-cta-btn{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00c853,#007c33);color:#000;font-weight:900;font-size:15px;padding:14px 28px;border-radius:12px;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;box-shadow:0 6px 24px rgba(0,200,83,.4);transition:all .3s;white-space:nowrap}
+.fb-banner:hover .fb-cta-btn{transform:scale(1.04);box-shadow:0 10px 32px rgba(0,200,83,.55)}
+.fb-mini{width:80px;height:120px;background:linear-gradient(180deg,#004d18,#006825);border-radius:6px;border:1.5px solid rgba(255,255,255,.2);position:relative;overflow:hidden}
+.fm-line{position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(255,255,255,.3)}
+.fm-circle{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,.3)}
+.fm-dot{position:absolute;transform:translate(-50%,-50%);width:10px;height:10px;border-radius:50%;background:#1565c0;border:1.5px solid rgba(255,255,255,.8)}
+.comp-badge{padding:8px 16px;border-radius:50px;border:1.5px solid var(--border);background:#fff;font-family:'Jost',sans-serif;font-size:13px;font-weight:500;color:var(--midnight);cursor:pointer;transition:all .2s}
+.comp-badge:hover,.comp-badge.on{border-color:var(--terra);color:var(--terra);background:var(--terra-lt)}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:20px}
+
+/* LINEUP MODAL */
+.lu-modal{display:none;position:fixed;inset:0;z-index:5000;background:#050c10;flex-direction:column;overflow:hidden}
+.lu-topbar{background:#0a1a0e;border-bottom:1px solid rgba(0,200,83,.2);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.lu-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#00c853;text-shadow:0 0 14px rgba(0,200,83,.4)}
+.lu-topbtns{display:flex;gap:8px}
+.lu-body{flex:1;display:grid;grid-template-columns:260px 1fr 260px;overflow:hidden;min-height:0}
+.lu-panel{background:#0a1a0e;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:6px}
+.lu-panel-l{border-right:1px solid rgba(0,200,83,.15)}
+.lu-panel-r{border-left:1px solid rgba(0,200,83,.15)}
+.lu-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#00c853;opacity:.75;padding:6px 0 3px}
+.lu-team-in,.lu-match-in{width:100%;padding:8px 12px;background:#071208;border:1.5px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-family:'Jost',sans-serif;font-size:12px;font-weight:700;transition:border .2s}
+.lu-team-in{text-align:center}
+.lu-team-in:focus,.lu-match-in:focus{outline:none;border-color:#00c853}
+.lu-sw{width:26px;height:26px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:all .2s;flex-shrink:0}
+.lu-sw:hover,.lu-sw.on{border-color:#fff;transform:scale(1.12)}
+.lu-form-btn{padding:7px 4px;background:#071208;border:1.5px solid rgba(255,255,255,.08);border-radius:7px;cursor:pointer;font-family:'Jost',sans-serif;font-size:11px;font-weight:700;color:#8892a4;transition:all .2s}
+.lu-form-btn:hover{border-color:#00c853;color:#fff}
+.lu-form-btn.on{background:#00c853;border-color:#00c853;color:#000}
+.lu-gbtn{width:100%;padding:10px;border-radius:9px;border:none;font-family:'Jost',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:6px}
+.lu-gbtn.grn{background:#00c853;color:#000}.lu-gbtn.grn:hover{background:#69f0ae}
+.lu-gbtn.out{background:transparent;color:#8892a4;border:1.5px solid rgba(255,255,255,.12);font-size:11px}
+.lu-gbtn.out:hover{border-color:#ff1744;color:#ff1744}
+.lu-add{width:100%;padding:9px;border-radius:9px;background:transparent;border:1.5px dashed rgba(0,200,83,.35);color:#00c853;font-family:'Jost',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:6px}
+.lu-add:hover{background:rgba(0,200,83,.1);border-color:#00c853}
+/* Pitch */
+.lu-pitch-wrap{display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at center,#0d1f14,#020805);padding:16px;overflow:hidden}
+.lu-pitch{position:relative;border-radius:12px;overflow:hidden;box-shadow:0 0 40px rgba(0,200,83,.25),0 0 80px rgba(0,200,83,.08)}
+.lu-pitch-bg{position:absolute;inset:0;background:linear-gradient(180deg,#004d18,#005c1e 30%,#006825 50%,#005c1e 70%,#004d18)}
+.lu-pitch-str{position:absolute;inset:0;background:repeating-linear-gradient(180deg,rgba(0,0,0,.14) 0px,rgba(0,0,0,.14) 27px,transparent 27px,transparent 54px)}
+.lu-pitch-ln{position:absolute;inset:0;background:linear-gradient(white,white) 3% 3.5%/94% 1.5px no-repeat,linear-gradient(white,white) 3% 96%/94% 1.5px no-repeat,linear-gradient(white,white) 3% 3.5%/1.5px 93% no-repeat,linear-gradient(white,white) 97% 3.5%/1.5px 93% no-repeat,linear-gradient(white,white) 3% 50%/94% 1.5px no-repeat,radial-gradient(circle at 50% 50%,transparent 9%,white 9%,white 10.2%,transparent 10.2%),linear-gradient(white,white) 22% 3.5%/56% 1.5px no-repeat,linear-gradient(white,white) 22% 3.5%/1.5px 13% no-repeat,linear-gradient(white,white) 78% 3.5%/1.5px 13% no-repeat,linear-gradient(white,white) 22% 16.5%/56% 1.5px no-repeat,linear-gradient(white,white) 22% 96%/56% 1.5px no-repeat,linear-gradient(white,white) 22% 83.5%/1.5px 12.5% no-repeat,linear-gradient(white,white) 78% 83.5%/1.5px 12.5% no-repeat,linear-gradient(white,white) 22% 83.5%/56% 1.5px no-repeat;opacity:.3}
+.lu-bn{position:absolute;left:0;right:0;z-index:10;display:flex;align-items:center;justify-content:center;gap:8px;padding:6px 10px}
+.lu-bn-t{top:0;background:linear-gradient(180deg,rgba(0,0,0,.75),transparent)}
+.lu-bn-b{bottom:0;flex-direction:row-reverse;background:linear-gradient(0deg,rgba(0,0,0,.75),transparent)}
+.lu-logo-c{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;overflow:hidden;transition:transform .2s;flex-shrink:0}
+.lu-logo-c:hover{transform:scale(1.1);border-color:#ffd600}
+.lu-logo-c img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.lu-team-disp{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+.lu-score-box{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:20;display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.8);border:1.5px solid rgba(255,255,255,.2);border-radius:10px;padding:5px 14px;backdrop-filter:blur(8px)}
+.lu-sc-lbl{font-size:8px;text-transform:uppercase;letter-spacing:1px;color:#8892a4;text-align:center}
+.lu-sc-num{font-family:'Bebas Neue',sans-serif;font-size:28px;line-height:1;min-width:20px;text-align:center;color:#fff}
+.lu-sc-sep{font-size:16px;color:#8892a4}
+.lu-info-bdg{position:absolute;top:50%;right:3%;transform:translateY(-50%);background:rgba(0,0,0,.65);border:1px solid rgba(255,255,255,.12);border-radius:7px;padding:7px 9px;z-index:15}
+.lu-ir{font-size:8px;color:#8892a4;margin-bottom:2px;white-space:nowrap}
+.lu-ir span{color:#fff;font-weight:700;margin-left:4px}
+.lu-players{position:absolute;inset:0;z-index:30}
+.lu-player{position:absolute;display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-50%);cursor:grab;user-select:none}
+.lu-player:active{cursor:grabbing;filter:drop-shadow(0 0 10px #00c853)}
+.lu-player.sel{filter:drop-shadow(0 0 12px #ffd600);z-index:50}
+.lu-pw{position:relative}
+.lu-pc{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;border:2.5px solid rgba(255,255,255,.9);box-shadow:0 3px 12px rgba(0,0,0,.6);overflow:hidden;cursor:pointer;background:var(--lc,#1565c0);transition:transform .2s}
+.lu-pc:hover{transform:scale(1.1)}
+.lu-pc img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.lu-pnum{position:absolute;top:-5px;left:-5px;width:17px;height:17px;border-radius:50%;background:#ffd600;color:#000;font-size:8px;font-weight:900;font-family:'Bebas Neue',sans-serif;display:flex;align-items:center;justify-content:center;border:1.5px solid #000;z-index:5}
+.lu-pcam{position:absolute;bottom:-2px;right:-2px;width:17px;height:17px;border-radius:50%;background:#ffd600;border:1.5px solid #000;display:flex;align-items:center;justify-content:center;font-size:8px;cursor:pointer;z-index:5;transition:transform .2s,background .2s}
+.lu-pcam:hover{transform:scale(1.25);background:#fff}
+.lu-cap{position:absolute;top:-5px;right:-5px;width:16px;height:16px;border-radius:50%;background:#ffd600;color:#000;font-size:8px;font-weight:900;display:flex;align-items:center;justify-content:center;border:1.5px solid #000;z-index:5}
+.lu-ntag{margin-top:4px;background:rgba(0,0,0,.82);border-radius:4px;padding:2px 7px;font-family:'Jost',sans-serif;font-size:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;white-space:nowrap;color:#fff;border:1px solid rgba(255,255,255,.12);max-width:72px;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.lu-ball{position:absolute;z-index:25;width:20px;height:20px;pointer-events:none;animation:luBounce 4.5s infinite ease-in-out;filter:drop-shadow(0 3px 6px rgba(0,0,0,.7))}
+.lu-ball-in{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff 0%,#ddd 40%,#888 100%);border:1.5px solid rgba(0,0,0,.4);animation:luSpin 1.4s linear infinite;box-shadow:inset -3px -3px 5px rgba(0,0,0,.4);position:relative;overflow:hidden}
+.lu-ball-in::after{content:'';position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(0,0,0,.18) 0deg 30deg,transparent 30deg 60deg)}
+@keyframes luBounce{0%{left:18%;top:18%}10%{left:68%;top:32%}22%{left:45%;top:58%}35%{left:22%;top:72%}48%{left:74%;top:52%}60%{left:40%;top:25%}72%{left:78%;top:18%}85%{left:30%;top:42%}100%{left:18%;top:18%}}
+@keyframes luSpin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.lu-pli{display:flex;align-items:center;gap:7px;padding:7px 8px;border-radius:9px;background:#071208;border:1.5px solid rgba(255,255,255,.06);transition:all .2s;cursor:pointer}
+.lu-pli:hover{border-color:rgba(0,200,83,.4)}
+.lu-pli.on{border-color:#00c853;background:#0d2018}
+.lu-pnum2{width:24px;height:24px;border-radius:50%;background:#007c33;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Bebas Neue',sans-serif}
+.lu-pphoto{width:30px;height:30px;border-radius:50%;background:#071208;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;flex-shrink:0;overflow:hidden;transition:border-color .2s}
+.lu-pphoto:hover{border-color:#ffd600}
+.lu-pphoto img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.lu-pinfo{flex:1;min-width:0}
+.lu-pname{background:transparent;border:none;color:#fff;font-family:'Jost',sans-serif;font-size:11px;font-weight:700;width:100%;outline:none;padding:0}
+.lu-ppos{font-size:9px;color:#00c853}
+.lu-pbtns{display:flex;gap:3px}
+.lu-pb{width:22px;height:22px;border-radius:5px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .2s}
+.lu-pb.cap{background:rgba(255,214,0,.15);color:#ffd600}
+.lu-pb.cap:hover,.lu-pb.cap.on{background:#ffd600;color:#000}
+.lu-pb.del{background:rgba(255,23,68,.1);color:#ff1744}
+.lu-pb.del:hover{background:#ff1744;color:#fff}
+.lu-bp{width:40px;text-align:center;cursor:pointer}
+.lu-bph{width:34px;height:34px;border-radius:50%;background:#071208;border:2px solid rgba(255,255,255,.15);margin:0 auto 2px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:border-color .2s}
+.lu-bph:hover{border-color:#ffd600}
+.lu-bph img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.lu-bnm{font-size:8px;color:#8892a4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:900px){.lu-body{grid-template-columns:1fr}}
+
+/* AUTH MODAL */
+.modal-ov{position:fixed;inset:0;z-index:2000;background:rgba(26,20,16,.65);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal-ov.open{display:flex}
+.modal-box{background:#fff;border-radius:20px;width:100%;max-width:440px;padding:32px;box-shadow:0 24px 80px rgba(0,0,0,.25);animation:slideUp .3s ease;position:relative}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.mc{position:absolute;top:14px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.mc:hover{background:var(--sand)}
+.m-logo{text-align:center;margin-bottom:20px}
+.m-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--midnight);margin-bottom:6px;text-align:center}
+.m-sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:20px}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--sand);border-radius:10px;padding:4px;gap:4px;margin-bottom:20px}
+.at{padding:9px;border-radius:8px;border:none;background:transparent;font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;transition:all .2s}
+.at.on{background:#fff;color:var(--midnight);box-shadow:var(--sh);font-weight:600}
+.soc-btn{width:100%;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-family:'Jost',sans-serif;font-size:14px;font-weight:500;color:var(--midnight);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s;margin-bottom:8px}
+.soc-btn:hover{border-color:var(--terra);background:var(--terra-lt)}
+.divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;margin:14px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.fl{margin-bottom:12px}
+.fl label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);display:block;margin-bottom:5px}
+.fl input{width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Jost',sans-serif;font-size:14px;color:var(--midnight);outline:none;transition:border .2s}
+.fl input:focus{border-color:var(--terra)}
+.fl-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.fl-row{grid-template-columns:1fr}}
+.btn-submit{width:100%;padding:14px;border-radius:10px;border:none;background:var(--terra);color:#fff;font-family:'Jost',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-top:4px}
+.btn-submit:hover{background:var(--terra-dk)}
+.pwd-bar{height:3px;border-radius:2px;margin-top:6px;background:var(--border);overflow:hidden}
+.pwd-fill{height:100%;border-radius:2px;transition:all .3s;width:0%}
+
+/* BOOKING MODAL */
+.bk-modal-box{background:#fff;border-radius:20px;width:100%;max-width:520px;padding:0;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.25);animation:slideUp .3s ease}
+.bk-hd{padding:18px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.bk-hd-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700}
+.bk-steps{display:flex;align-items:center;gap:0;padding:16px 24px;border-bottom:1px solid var(--border)}
+.bstep{display:flex;align-items:center;gap:8px;flex:1}
+.bstep-c{width:28px;height:28px;border-radius:50%;background:var(--border);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all .3s}
+.bstep.on .bstep-c{background:var(--terra);color:#fff}
+.bstep.done .bstep-c{background:var(--green);color:#fff}
+.bstep-lbl{font-size:12px;font-weight:500;color:var(--muted)}
+.bstep.on .bstep-lbl{color:var(--terra);font-weight:600}
+.bstep-ln{flex:1;height:1px;background:var(--border);margin:0 4px}
+.bk-panel{padding:24px;display:none}
+.bk-panel.on{display:block}
+.pay-methods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.pm{padding:12px;border-radius:10px;border:1.5px solid var(--border);cursor:pointer;text-align:center;transition:all .2s}
+.pm:hover,.pm.on{border-color:var(--terra);background:var(--terra-lt)}
+.pm-icon{font-size:20px;margin-bottom:4px}
+.pm-lbl{font-size:11px;font-weight:600;color:var(--muted)}
+.conf-icon{width:64px;height:64px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;margin:0 auto 16px}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--midnight);color:#fff;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:500;z-index:9999;transition:transform .35s;display:flex;align-items:center;gap:8px;box-shadow:var(--sh-lg);white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.ok{background:var(--green)}
+
+/* FOOTER */
+footer{background:var(--midnight);padding:56px 5% 28px;border-top:1px solid rgba(212,168,67,.1)}
+.ft-grid{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.ft-grid{grid-template-columns:1fr}}
+.ft-brand p{font-size:13px;color:rgba(255,255,255,.35);line-height:1.75;margin-top:12px}
+.soc-links{display:flex;gap:8px;margin-top:16px}
+.soc-lnk{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.4);font-size:13px;cursor:pointer;transition:all .3s}
+.soc-lnk:hover{background:var(--gold);border-color:var(--gold);color:var(--midnight)}
+.ft-col h4{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.ft-col ul{list-style:none}
+.ft-col ul li{margin-bottom:9px}
+.ft-col ul li a{color:rgba(255,255,255,.35);text-decoration:none;font-size:13px;transition:color .3s;cursor:pointer}
+.ft-col ul li a:hover{color:rgba(255,255,255,.8)}
+.ft-bot{border-top:1px solid rgba(255,255,255,.06);padding-top:24px;display:flex;justify-content:space-between;align-items:center;max-width:1160px;margin:0 auto;font-size:12px;color:rgba(255,255,255,.2);flex-wrap:wrap;gap:10px}
+
+/* ===== PWA INSTALL BANNER ===== */
+#pwa-banner{
+  display:none;
+  width:100%;
+  background:linear-gradient(135deg,rgba(26,20,16,.97),rgba(45,20,5,.95));
+  border:1px solid rgba(212,168,67,.3);
+  border-radius:14px;
+  padding:14px 18px;
+  margin-top:16px;
+  align-items:center;
+  gap:14px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  animation:bannerSlideIn .5s cubic-bezier(.34,1.56,.64,1) both;
+  position:relative;z-index:2;
+}
+#pwa-banner.show{display:flex;}
+@keyframes bannerSlideIn{
+  from{opacity:0;transform:translateY(12px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.pwa-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:linear-gradient(135deg,var(--gold),#b8860b);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(212,168,67,.35);
+}
+.pwa-txt{flex:1}
+.pwa-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.pwa-sub{font-size:12px;color:rgba(255,255,255,.5);line-height:1.4}
+.pwa-btn{
+  padding:9px 18px;border-radius:8px;border:none;
+  background:linear-gradient(135deg,var(--gold),#c9980a);
+  color:var(--midnight);font-family:'Jost',sans-serif;
+  font-size:13px;font-weight:700;cursor:pointer;
+  white-space:nowrap;transition:all .2s;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(212,168,67,.4);
+}
+.pwa-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,168,67,.55);}
+.pwa-close{
+  position:absolute;top:8px;right:10px;
+  background:none;border:none;color:rgba(255,255,255,.3);
+  font-size:16px;cursor:pointer;padding:2px 4px;
+  transition:color .2s;line-height:1;
+}
+.pwa-close:hover{color:rgba(255,255,255,.7);}
+/* ===== SPLASH SCREEN ===== */
+#splash{
+  position:fixed;inset:0;z-index:99999;
+  background:#0a0a0a;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+#splash.fade-out{
+  animation:splashFadeOut .8s ease forwards;
+  pointer-events:none;
+}
+@keyframes splashFadeOut{
+  0%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(1.04)}
+}
+
+/* Background pattern */
+#splash-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(196,98,45,.12) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(212,168,67,.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 80% 20%, rgba(212,168,67,.06) 0%, transparent 60%);
+}
+#splash-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(212,168,67,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,168,67,.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  animation:gridDrift 20s linear infinite;
+}
+@keyframes gridDrift{
+  0%{transform:translateY(0)}
+  100%{transform:translateY(60px)}
+}
+
+/* Moroccan geometric ornament */
+#splash-ornament{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  opacity:.04;
+  pointer-events:none;
+}
+#splash-ornament svg{width:min(600px,90vw);height:min(600px,90vw)}
+
+/* Main content */
+#splash-content{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:0;
+}
+
+/* Logo icon */
+#splash-icon{
+  width:80px;height:80px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),#b8860b);
+  display:flex;align-items:center;justify-content:center;
+  font-size:32px;
+  color:#1A1209;
+  margin-bottom:24px;
+  box-shadow:0 0 0 0 rgba(212,168,67,.5);
+  animation:splashIconIn .7s cubic-bezier(.34,1.56,.64,1) .2s both, splashPulse 2s ease-in-out 1s infinite;
+}
+@keyframes splashIconIn{
+  from{opacity:0;transform:scale(.4) rotate(-180deg)}
+  to{opacity:1;transform:scale(1) rotate(0deg)}
+}
+@keyframes splashPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(212,168,67,.4)}
+  50%{box-shadow:0 0 0 20px rgba(212,168,67,0)}
+}
+
+/* Brand name */
+#splash-brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(42px,8vw,72px);
+  font-weight:700;
+  color:#fff;
+  letter-spacing:2px;
+  line-height:1;
+  margin-bottom:6px;
+  overflow:hidden;
+}
+#splash-brand .v1{
+  display:inline-block;
+  animation:splashWordIn .7s cubic-bezier(.22,1,.36,1) .4s both;
+}
+#splash-brand .v2{
+  display:inline-block;
+  color:var(--gold);
+  animation:splashWordIn .7s cubic-bezier(.22,1,.36,1) .55s both;
+}
+@keyframes splashWordIn{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Tagline */
+#splash-tag{
+  font-family:'Jost',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.35);
+  margin-bottom:48px;
+  animation:splashFadeIn .7s ease .8s both;
+}
+@keyframes splashFadeIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Progress bar */
+#splash-progress-wrap{
+  width:min(280px,70vw);
+  animation:splashFadeIn .5s ease 1s both;
+}
+#splash-progress-track{
+  width:100%;height:2px;
+  background:rgba(255,255,255,.08);
+  border-radius:2px;
+  overflow:hidden;
+  margin-bottom:14px;
+}
+#splash-progress-bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--terra),var(--gold));
+  border-radius:2px;
+  width:0%;
+  transition:width .05s linear;
+  box-shadow:0 0 12px rgba(212,168,67,.6);
+}
+#splash-progress-label{
+  text-align:center;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.25);
+  font-family:'Jost',sans-serif;
+}
+
+/* Decorative dots */
+#splash-dots{
+  position:absolute;
+  display:flex;gap:6px;
+  bottom:-32px;
+  animation:splashFadeIn .5s ease 1.1s both;
+}
+.sp-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:rgba(212,168,67,.3);
+}
+.sp-dot.mid{
+  background:var(--gold);
+  width:20px;border-radius:2px;
+}
+
+/* Corner accents */
+.splash-corner{
+  position:absolute;
+  width:60px;height:60px;
+  opacity:.2;
+}
+.splash-corner.tl{top:24px;left:24px;border-top:2px solid var(--gold);border-left:2px solid var(--gold)}
+.splash-corner.tr{top:24px;right:24px;border-top:2px solid var(--gold);border-right:2px solid var(--gold)}
+.splash-corner.bl{bottom:24px;left:24px;border-bottom:2px solid var(--gold);border-left:2px solid var(--gold)}
+.splash-corner.br{bottom:24px;right:24px;border-bottom:2px solid var(--gold);border-right:2px solid var(--gold)}
+/* ===== LIGHTBOX ===== */
+#lightbox{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;flex-direction:column}
+#lightbox.open{display:flex}
+#lb-img{max-width:90vw;max-height:80vh;object-fit:contain;border-radius:8px;transition:opacity .3s}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.12);border:none;color:#fff;font-size:28px;cursor:pointer;padding:14px 18px;border-radius:50%;transition:background .2s;z-index:2}
+.lb-nav:hover{background:rgba(255,255,255,.25)}
+#lb-prev{left:20px}
+#lb-next{right:20px}
+#lb-close{position:absolute;top:20px;right:20px;background:rgba(255,255,255,.12);border:none;color:#fff;font-size:22px;cursor:pointer;padding:10px 14px;border-radius:50%;transition:background .2s}
+#lb-close:hover{background:rgba(255,255,255,.25)}
+#lb-counter{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.6);font-size:13px;font-family:'Jost',sans-serif}
+#lb-thumbs{position:absolute;bottom:52px;left:50%;transform:translateX(-50%);display:flex;gap:8px;max-width:90vw;overflow-x:auto;padding:4px}
+.lb-thumb{width:54px;height:40px;object-fit:cover;border-radius:5px;opacity:.5;cursor:pointer;transition:all .2s;flex-shrink:0;border:2px solid transparent}
+.lb-thumb.active{opacity:1;border-color:var(--gold)}
+/* ===== END LIGHTBOX ===== */
+/* ===== END SPLASH ===== */
+</style>
+</head>
+<body>
+
+<!-- ===== SPLASH SCREEN ===== -->
+<div id="splash">
+  <div id="splash-bg"></div>
+  <div id="splash-grid"></div>
+
+  <!-- Moroccan geometric star background -->
+  <div id="splash-ornament">
+    <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="200,20 230,110 320,80 270,160 360,180 270,220 320,300 230,270 200,360 170,270 80,300 130,220 40,180 130,160 80,80 170,110" fill="none" stroke="#D4A843" stroke-width="1.5"/>
+      <polygon points="200,60 222,125 290,100 248,160 315,180 248,200 290,260 222,235 200,300 178,235 110,260 152,200 85,180 152,160 110,100 178,125" fill="none" stroke="#D4A843" stroke-width="1"/>
+      <circle cx="200" cy="200" r="80" stroke="#D4A843" stroke-width="1"/>
+      <circle cx="200" cy="200" r="50" stroke="#D4A843" stroke-width=".5"/>
+      <polygon points="200,120 220,180 280,180 232,215 250,275 200,240 150,275 168,215 120,180 180,180" fill="none" stroke="#D4A843" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <!-- Corner accents -->
+  <div class="splash-corner tl"></div>
+  <div class="splash-corner tr"></div>
+  <div class="splash-corner bl"></div>
+  <div class="splash-corner br"></div>
+
+  <!-- Main content -->
+  <div id="splash-content">
+    <div id="splash-icon">✦</div>
+    <div id="splash-brand">
+      <span class="v1">Vista</span><span class="v2">Morocco</span>
+    </div>
+    <div id="splash-tag">Réservez au Maroc</div>
+
+    <div id="splash-progress-wrap">
+      <div id="splash-progress-track">
+        <div id="splash-progress-bar"></div>
+      </div>
+      <div id="splash-progress-label">Chargement...</div>
+    </div>
+
+    <div id="splash-dots">
+      <div class="sp-dot"></div>
+      <div class="sp-dot mid"></div>
+      <div class="sp-dot"></div>
+    </div>
+  </div>
+</div>
+<!-- ===== END SPLASH ===== -->
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo" onclick="showPage('home')">
+    <div class="logo-icon">✦</div>
+    <span class="logo-txt">Vista<span>Morocco</span></span>
+  </div>
+  <div class="nav-links">
+    <span class="nav-link" onclick="showPage('listings')">Hébergements</span>
+    <span class="nav-link" onclick="filterCat('Restaurants')">Restaurants</span>
+    <span class="nav-link" onclick="showPage('cars')">🚗 Location</span>
+    <span class="nav-link" onclick="showPage('sports')">Sports</span>
+    <span class="nav-link" onclick="filterCat('Excursions')">Excursions</span>
+  </div>
+  <div class="nav-actions" id="navActions">
+    <button class="btn-ghost" onclick="openAuth('login')">Connexion</button>
+    <button class="btn-primary" onclick="openAuth('register')">S'inscrire</button>
+  </div>
+  <button class="hamburger" onclick="showToast('Menu mobile — bientôt disponible')"><i class="fas fa-bars"></i></button>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1597212618440-806262de4f8b?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="hero-slide" style="background-image:url('https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=1600&q=80')"></div>
+    <div class="hero-ov"></div>
+    <div class="hero-cnt">
+      <div class="hero-badge">✦ Le Royaume Chérifien vous attend ✦</div>
+      <h1>Explorez le Maroc,<br><em>Réservez facilement</em></h1>
+      <p class="hero-sub">Riads, restaurants, excursions et activités — des milliers d'adresses authentiques dans tout le Maroc.</p>
+      <div class="search-box">
+        <div class="sf">
+          <div class="sf-lbl"><i class="fas fa-map-marker-alt" style="color:var(--terra)"></i> Destination</div>
+          <select id="hCity" onchange="syncCity(this.value)">
+            <option value="">Toutes les villes</option>
+            <option>Marrakech</option><option>Casablanca</option><option>Fès</option>
+            <option>Chefchaouen</option><option>Agadir</option><option>Essaouira</option>
+            <option>Rabat</option><option>El Jadida</option><option>Merzouga</option>
+          </select>
+        </div>
+        <div class="sf" style="border-right:none">
+          <div class="sf-lbl"><i class="fas fa-th-large" style="color:var(--terra)"></i> Catégorie</div>
+          <select id="hCat">
+            <option value="">Toutes catégories</option>
+            <option>Riads &amp; Hôtels</option>
+            <option>Restaurants</option>
+            <option>Cafés</option>
+            <option>Excursions</option>
+            <option>Hammams &amp; Spas</option>
+            <option>Surf &amp; Plage</option>
+            <option>Culture &amp; Visites</option>
+            <option>Sports</option>
+            <option>Location Voitures</option>
+          </select>
+        </div>
+        <button class="btn-search" onclick="doSearch()"><i class="fas fa-search"></i> Rechercher</button>
+      </div>
+      <div class="cities-strip">
+        <span class="city-pill" onclick="quickCity('Marrakech')">🕌 Marrakech</span>
+        <span class="city-pill" onclick="quickCity('Casablanca')">🏙️ Casablanca</span>
+        <span class="city-pill" onclick="quickCity('Chefchaouen')">💙 Chefchaouen</span>
+        <span class="city-pill" onclick="quickCity('Agadir')">🏖️ Agadir</span>
+        <span class="city-pill" onclick="quickCity('Merzouga')">🐪 Sahara</span>
+      </div>
+      <div class="hero-dots" id="heroDots"></div>
+
+      <!-- PWA INSTALL BANNER -->
+      <div id="pwa-banner">
+        <button class="pwa-close" onclick="dismissPWA()" aria-label="Fermer">✕</button>
+        <div class="pwa-icon">📲</div>
+        <div class="pwa-txt">
+          <div class="pwa-title">Installer VistaMorocco</div>
+          <div class="pwa-sub">Accédez à l'app sans connexion</div>
+        </div>
+        <button class="pwa-btn" onclick="installPWA()">Installer</button>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div><div class="stat-num" id="cnt1">0</div><div class="stat-lbl">Annonces</div></div>
+      <div><div class="stat-num">48</div><div class="stat-lbl">Villes</div></div>
+      <div><div class="stat-num" id="cnt2">0</div><div class="stat-lbl">Voyageurs</div></div>
+      <div><div class="stat-num">4.8★</div><div class="stat-lbl">Satisfaction</div></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-inner">
+      <div class="eyebrow">Explorer par catégorie</div>
+      <div class="sec-title">Que cherchez-vous <em>aujourd'hui ?</em></div>
+      <div class="ornament"><div class="orn-line"></div><span class="orn-star">✦</span><div class="orn-line"></div></div>
+      <div class="cat-grid">
+        <div class="cat-card" onclick="filterCat('Riads & Hôtels')">
+          <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=400&q=80" alt="Riads & Hôtels">
+          <div class="cat-card-ov"></div>
+          <div class="cat-card-body"><div class="cat-icon">🕌</div><div class="cat-name">Riads & Hôtels</div><div class="cat-count">128 annonces</div></div>
+        </div>
+        <div class="cat-card" onclick="filterCat('Restaurants')">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=400&q=80" alt="Restaurants">
+          <div class="cat-card-ov"></div>
+          <div class="cat-card-body"><div class="cat-icon">🍲</div><div class="cat-name">Restaurants</div><div class="cat-count">245 annonces</div></div>
+        </div>
+        <div class="cat-card" onclick="filterCat('Cafés')">
+          <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=400&q=80" alt="Cafés">
+          <div class="cat-card-ov"></div>
+          <div class="cat-card-body"><div class="cat-icon">☕</div><div class="cat-name">Cafés</div><div class="cat-count">112 annonces</div></div>
+        </div>
+        <div class="cat-card" onclick="filterCat('Excursions')">
+          <img src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=400&q=80" alt="Excursions">
+          <div class="cat-card-ov"></div>
+          <div class="cat-card-body"><div class="cat-icon">🐪</div><div class="cat-name">Excursions</div><div class="cat-count">96 annonces</div></div>
+        </div>
+        <div class="cat-card" onclick="filterCat('Hammams & Spas')">
+          <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80" alt="Hammams">
+          <div class="cat-card-ov"></div>
+          <div class="cat-card-body"><div class="cat-icon">💆</div><div class="cat-name">Hammams & Spas</div><div class="cat-count">73 annonces</div></div>
+        </div>
+        <div class="cat-card" onclick="filterCat('Surf & Plage')">
+          <img src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=400&q=80" alt="Surf">
+          <div class="cat-card-ov"></div>
+          <div class="cat-card-body"><div class="cat-icon">🏄</div><div class="cat-name">Surf & Plage</div><div class="cat-count">42 annonces</div></div>
+        </div>
+        <div class="cat-card" onclick="showPage('sports')">
+          <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=400&q=80" alt="Sports">
+          <div class="cat-card-ov"></div>
+          <div class="cat-card-body"><div class="cat-icon">⚽</div><div class="cat-name">Sports</div><div class="cat-count">88 activités</div></div>
+        </div>
+        <div class="cat-card" onclick="showPage('cars')" style="outline:2px solid var(--terra);outline-offset:-2px">
+          <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=400&q=80" alt="Location Voitures">
+          <div class="cat-card-ov"></div>
+          <div class="cat-card-body"><div class="cat-icon">🚗</div><div class="cat-name" style="color:var(--gold)">Location Voitures</div><div class="cat-count">Nouveau ✨</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec sec-alt">
+    <div class="sec-inner">
+      <div class="eyebrow">Sélection du moment</div>
+      <div class="sec-title">Les meilleures adresses <em>au Maroc</em></div>
+      <div class="ornament"><div class="orn-line"></div><span class="orn-star">✦</span><div class="orn-line"></div></div>
+      <div class="grid" id="homeFeatured"></div>
+      <div style="text-align:center;margin-top:32px">
+        <button class="btn-ghost" onclick="showPage('listings')" style="padding:12px 32px;font-size:15px;border-color:var(--terra);color:var(--terra)">Voir toutes les annonces <i class="fas fa-arrow-right" style="margin-left:6px"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <div class="logo" style="margin-bottom:0"><div class="logo-icon">✦</div><span class="logo-txt">Vista<span>Morocco</span></span></div>
+        <p>La référence pour réserver au Maroc. Riads, restaurants, excursions — authentiques et vérifiés depuis 2022.</p>
+        <div class="soc-links">
+          <div class="soc-lnk"><i class="fab fa-instagram"></i></div>
+          <div class="soc-lnk"><i class="fab fa-facebook-f"></i></div>
+          <div class="soc-lnk"><i class="fab fa-tiktok"></i></div>
+        </div>
+      </div>
+      <div class="ft-col"><h4>Explorer</h4><ul>
+        <li><a onclick="quickCity('Marrakech')">Marrakech</a></li>
+        <li><a onclick="quickCity('Casablanca')">Casablanca</a></li>
+        <li><a onclick="quickCity('Fès')">Fès</a></li>
+        <li><a onclick="quickCity('Chefchaouen')">Chefchaouen</a></li>
+        <li><a onclick="quickCity('Agadir')">Agadir</a></li>
+        <li><a onclick="quickCity('Merzouga')">Sahara</a></li>
+      </ul></div>
+      <div class="ft-col"><h4>Catégories</h4><ul>
+        <li><a onclick="filterCat('Riads & Hôtels')">Riads & Hôtels</a></li>
+        <li><a onclick="filterCat('Restaurants')">Restaurants</a></li>
+        <li><a onclick="filterCat('Excursions')">Excursions</a></li>
+        <li><a onclick="filterCat('Hammams & Spas')">Hammams</a></li>
+        <li><a onclick="showPage('sports')">Sports</a></li>
+        <li><a onclick="showPage('cars')">🚗 Location Voitures</a></li>
+      </ul></div>
+      <div class="ft-col"><h4>VistaMorocco</h4><ul>
+        <li><a onclick="openAuth('register')">Devenir partenaire</a></li>
+        <li><a>Conditions d'utilisation</a></li>
+        <li><a>Confidentialité</a></li>
+        <li><a onclick="openAuth('login')">Connexion</a></li>
+      </ul></div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 VistaMorocco. Tous droits réservés.</span>
+      <span>🇲🇦 Fait avec ♥ pour le Maroc</span>
+    </div>
+  </footer>
+</div>
+
+<!-- LISTINGS -->
+<div id="page-listings" class="page">
+  <div class="ph"><div class="ph-inner">
+    <div class="bc"><span onclick="showPage('home')">Accueil</span><i class="fas fa-chevron-right"></i><span id="listPageTitle">Toutes les annonces</span></div>
+    <h1 id="listPageH1">Toutes les <em>annonces</em></h1>
+    <p id="listPageSub">Riads, restaurants, excursions & activités dans tout le Maroc</p>
+  </div></div>
+  <div class="list-wrap">
+    <div class="list-bar">
+      <select id="lCity" onchange="renderListings()">
+        <option value="">Toutes les villes</option>
+        <option>Marrakech</option><option>Casablanca</option><option>Fès</option>
+        <option>Chefchaouen</option><option>Agadir</option><option>Essaouira</option>
+        <option>Rabat</option><option>El Jadida</option><option>Merzouga</option>
+      </select>
+      <select id="lCat" onchange="renderListings()">
+        <option value="">Toutes catégories</option>
+        <option>Riads & Hôtels</option><option>Restaurants</option><option>Excursions</option>
+        <option>Hammams & Spas</option><option>Surf & Plage</option><option>Culture & Visites</option>
+      </select>
+      <select id="lSort" onchange="renderListings()">
+        <option value="rating">Mieux notés</option>
+        <option value="price_asc">Prix croissant</option>
+        <option value="price_desc">Prix décroissant</option>
+      </select>
+      <button class="btn-search" style="margin:4px;padding:10px 20px" onclick="renderListings()"><i class="fas fa-search"></i></button>
+    </div>
+    <div class="filter-row">
+      <button class="fb on" onclick="setCityFilter('',this)">Tout</button>
+      <button class="fb" onclick="setCityFilter('Marrakech',this)">🕌 Marrakech</button>
+      <button class="fb" onclick="setCityFilter('Casablanca',this)">🏙️ Casablanca</button>
+      <button class="fb" onclick="setCityFilter('Fès',this)">🏺 Fès</button>
+      <button class="fb" onclick="setCityFilter('Agadir',this)">🏖️ Agadir</button>
+      <button class="fb" onclick="setCityFilter('Chefchaouen',this)">💙 Chefchaouen</button>
+      <button class="fb" onclick="setCityFilter('Essaouira',this)">🌊 Essaouira</button>
+      <button class="fb" onclick="setCityFilter('El Jadida',this)">🏰 El Jadida</button>
+      <button class="fb" onclick="setCityFilter('Merzouga',this)">🐪 Merzouga</button>
+      <span class="res-cnt" id="resCnt"></span>
+    </div>
+    <div class="grid" id="listGrid"></div>
+  </div>
+</div>
+
+<!-- DETAIL -->
+<div id="page-detail" class="page">
+  <div id="detailContent"></div>
+</div>
+
+<!-- CARS PAGE -->
+<div id="page-cars" class="page">
+  <div class="ph">
+    <div class="ph-inner">
+      <div class="bc"><span onclick="showPage('home')">Accueil</span><i class="fas fa-chevron-right"></i><span>Location de Voitures</span></div>
+      <h1>🚗 Location de <em>Voitures</em></h1>
+      <p>Citadines, SUV, sportives & utilitaires — disponibles dans tout le Maroc</p>
+    </div>
+  </div>
+
+  <!-- CAR WASH BANNER -->
+  <div class="sec" style="padding:32px 5% 0">
+    <div class="sec-inner">
+      <div style="display:flex;align-items:center;gap:32px;background:linear-gradient(135deg,#0a1628,#0d2240);border:1.5px solid rgba(30,136,229,.3);border-radius:20px;padding:28px 36px;cursor:pointer;position:relative;overflow:hidden;transition:all .3s;box-shadow:0 8px 40px rgba(30,136,229,.12)" onclick="openCarWash()" onmouseover="this.style.borderColor='rgba(30,136,229,.7)';this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='rgba(30,136,229,.3)';this.style.transform=''">
+        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(30,136,229,.07),transparent 70%)"></div>
+        <div style="font-size:56px;flex-shrink:0;filter:drop-shadow(0 4px 12px rgba(30,136,229,.4));position:relative">🚿</div>
+        <div style="flex:1;position:relative">
+          <div style="font-size:11px;color:#1e88e5;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;opacity:.9">✨ SERVICE PREMIUM</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:3px;color:#fff;line-height:1;margin-bottom:8px;text-shadow:0 0 30px rgba(30,136,229,.3)">LAVAGE AUTO MOBILE</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.5);margin-bottom:14px">On vient chez vous · Équipement pro · Résultat garanti</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(30,136,229,.12);border:1px solid rgba(30,136,229,.25);border-radius:50px;padding:4px 12px">🧴 Produits pro</span>
+            <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(30,136,229,.12);border:1px solid rgba(30,136,229,.25);border-radius:50px;padding:4px 12px">🚐 Van équipé</span>
+            <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(30,136,229,.12);border:1px solid rgba(30,136,229,.25);border-radius:50px;padding:4px 12px">📍 Déplacement gratuit</span>
+            <span style="font-size:11px;font-weight:600;color:rgba(255,255,255,.65);background:rgba(30,136,229,.12);border:1px solid rgba(30,136,229,.25);border-radius:50px;padding:4px 12px">⏱ 45 min chrono</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:14px;flex-shrink:0">
+          <div style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#1e88e5,#1565c0);color:#fff;font-weight:900;font-size:15px;padding:14px 24px;border-radius:12px;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;box-shadow:0 6px 24px rgba(30,136,229,.45);white-space:nowrap">Réserver →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAR WASH MODAL -->
+  <div id="carWashModal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(10,10,20,.85);backdrop-filter:blur(8px);overflow-y:auto;padding:20px" onclick="if(event.target===this)closeCarWash()">
+    <div style="max-width:900px;margin:0 auto;background:#0d1b2a;border-radius:24px;border:1px solid rgba(30,136,229,.2);overflow:hidden">
+      <!-- Header -->
+      <div style="background:linear-gradient(135deg,#0a1628,#0d2240);padding:28px 32px;border-bottom:1px solid rgba(30,136,229,.15);display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:11px;color:#1e88e5;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">Service Premium</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:3px;color:#fff">🚿 LAVAGE AUTO MOBILE</div>
+        </div>
+        <button onclick="closeCarWash()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:#fff;font-size:20px;cursor:pointer;padding:8px 14px;line-height:1">✕</button>
+      </div>
+
+      <!-- Hero image - van équipé -->
+      <div style="position:relative;height:280px;overflow:hidden">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=80" alt="Van lavage mobile" style="width:100%;height:100%;object-fit:cover" onerror="this.src='https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?auto=format&fit=crop&w=900&q=80'">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(13,27,42,.95) 0%,rgba(13,27,42,.3) 60%,transparent 100%)"></div>
+        <div style="position:absolute;bottom:20px;left:32px;right:32px">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:#fff;margin-bottom:6px">Le salon de votre voiture, devant chez vous</div>
+          <div style="font-size:14px;color:rgba(255,255,255,.55)">Notre technicien arrive avec son van entièrement équipé — eau, produits, aspirateur, polish.</div>
+        </div>
+      </div>
+
+      <div style="padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:32px">
+        <!-- Left: Images + details -->
+        <div>
+          <!-- Photo grid -->
+          <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:14px">Notre équipement</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px">
+            <div style="border-radius:12px;overflow:hidden;height:130px"><img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=400&q=80" alt="Produits lavage" style="width:100%;height:100%;object-fit:cover" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80'"></div>
+            <div style="border-radius:12px;overflow:hidden;height:130px"><img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?auto=format&fit=crop&w=400&q=80" alt="Nettoyage voiture" style="width:100%;height:100%;object-fit:cover"></div>
+            <div style="border-radius:12px;overflow:hidden;height:130px"><img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=400&q=80" alt="Aspirateur voiture" style="width:100%;height:100%;object-fit:cover" onerror="this.src='https://images.unsplash.com/photo-1609861600902-a91e1c8e97b2?auto=format&fit=crop&w=400&q=80'"></div>
+            <div style="border-radius:12px;overflow:hidden;height:130px"><img src="https://images.unsplash.com/photo-1609861600902-a91e1c8e97b2?auto=format&fit=crop&w=400&q=80" alt="Polissage" style="width:100%;height:100%;object-fit:cover" onerror="this.src='https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80'"></div>
+          </div>
+          <!-- Inclus -->
+          <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:12px">Ce qui est inclus</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            ${['🧴 Shampoing carrosserie','💨 Soufflage jantes','🪣 Rinçage haute pression','✨ Polish & cire','🧹 Aspiration intérieur','🪟 Vitres intérieur/extérieur','🌸 Désodorisant','📸 Photos avant/après'].map(a=>`<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65);padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05)">${a}</div>`).join('')}
+          </div>
+        </div>
+
+        <!-- Right: Booking form -->
+        <div>
+          <div style="background:rgba(255,255,255,.04);border:1px solid rgba(30,136,229,.2);border-radius:16px;padding:24px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:4px">Réserver le service</div>
+            <div style="font-size:13px;color:rgba(255,255,255,.4);margin-bottom:20px">Disponible 7j/7 · 8h–20h</div>
+
+            <div style="margin-bottom:14px">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.4);margin-bottom:6px">Type de véhicule</div>
+              <select id="cwVehicle" style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid rgba(30,136,229,.25);background:rgba(255,255,255,.06);color:#fff;font-family:'Jost',sans-serif;font-size:14px;outline:none" onchange="updateCWPrice()">
+                <option value="150">Citadine — 150 MAD</option>
+                <option value="200">Berline — 200 MAD</option>
+                <option value="250">SUV / 4x4 — 250 MAD</option>
+                <option value="300">Minivan / Utilitaire — 300 MAD</option>
+              </select>
+            </div>
+
+            <div style="margin-bottom:14px">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.4);margin-bottom:6px">Formule</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div class="cw-formula on" data-extra="0" onclick="selectCWFormula(this,0)" style="border:1.5px solid #1e88e5;background:rgba(30,136,229,.12);border-radius:10px;padding:12px;cursor:pointer;text-align:center;transition:all .2s">
+                  <div style="font-size:18px">💧</div>
+                  <div style="font-size:13px;font-weight:700;color:#fff;margin:4px 0">Lavage Simple</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,.4)">Extérieur complet</div>
+                </div>
+                <div class="cw-formula" data-extra="100" onclick="selectCWFormula(this,100)" style="border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);border-radius:10px;padding:12px;cursor:pointer;text-align:center;transition:all .2s">
+                  <div style="font-size:18px">✨</div>
+                  <div style="font-size:13px;font-weight:700;color:#fff;margin:4px 0">Full Detailing</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,.4)">+100 MAD</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-bottom:14px">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.4);margin-bottom:6px">Adresse</div>
+              <input type="text" placeholder="Ex: Hay Riad, Rabat" id="cwAddress" style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid rgba(30,136,229,.25);background:rgba(255,255,255,.06);color:#fff;font-family:'Jost',sans-serif;font-size:14px;outline:none;margin-bottom:8px" onerror="">
+              <input type="text" placeholder="Date & heure souhaitée" id="cwDate" style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid rgba(30,136,229,.25);background:rgba(255,255,255,.06);color:#fff;font-family:'Jost',sans-serif;font-size:14px;outline:none">
+            </div>
+
+            <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:16px;margin-bottom:16px">
+              <div style="display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.45);margin-bottom:6px"><span>Lavage</span><span id="cwPriceBase">150 MAD</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:13px;color:rgba(255,255,255,.45);margin-bottom:6px"><span>Déplacement</span><span style="color:#2d7a4f">Gratuit</span></div>
+              <div style="display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:#fff;border-top:1px solid rgba(255,255,255,.08);padding-top:10px;margin-top:4px"><span>Total</span><span id="cwPriceTotal" style="color:#1e88e5">150 MAD</span></div>
+            </div>
+
+            <button onclick="bookCarWash()" style="width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,#1e88e5,#1565c0);color:#fff;font-family:'Jost',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(30,136,229,.5)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+              🚿 Confirmer le lavage
+            </button>
+            <p style="font-size:12px;color:rgba(255,255,255,.25);text-align:center;margin-top:10px">⏱ Durée : 45 min · Paiement sur place</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAR TYPES SECTION -->
+  <div class="sec">
+    <div class="sec-inner">
+      <div class="eyebrow">Notre flotte</div>
+      <div class="sec-title">Choisissez votre <em>véhicule</em></div>
+      <div class="ornament"><div class="orn-line"></div><span class="orn-star">✦</span><div class="orn-line"></div></div>
+
+      <!-- Filter tabs -->
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:20px 0" id="carTypeFilter">
+        <button class="comp-badge on" onclick="filterCarType('',this)">🚗 Tous</button>
+        <button class="comp-badge" onclick="filterCarType('Citadine',this)">🚙 Citadines</button>
+        <button class="comp-badge" onclick="filterCarType('Berline',this)">🚘 Berlines</button>
+        <button class="comp-badge" onclick="filterCarType('SUV',this)">🛻 SUV / 4x4</button>
+        <button class="comp-badge" onclick="filterCarType('Sportive',this)">🏎️ Sportives</button>
+        <button class="comp-badge" onclick="filterCarType('Utilitaire',this)">🚐 Utilitaires</button>
+      </div>
+
+      <div class="grid" id="carsGrid" style="margin-top:8px"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <div class="logo" style="margin-bottom:0"><div class="logo-icon">✦</div><span class="logo-txt">Vista<span>Morocco</span></span></div>
+        <p>La référence pour réserver au Maroc. Voitures, riads, restaurants — authentiques et vérifiés.</p>
+      </div>
+      <div class="ft-col"><h4>Location</h4><ul>
+        <li><a onclick="filterCarType('Citadine',document.querySelector('.comp-badge'))">Citadines</a></li>
+        <li><a onclick="filterCarType('SUV',document.querySelector('.comp-badge'))">SUV & 4x4</a></li>
+        <li><a onclick="filterCarType('Sportive',document.querySelector('.comp-badge'))">Sportives</a></li>
+        <li><a onclick="openCarWash()">🚿 Lavage Mobile</a></li>
+      </ul></div>
+      <div class="ft-col"><h4>VistaMorocco</h4><ul>
+        <li><a onclick="showPage('home')">Accueil</a></li>
+        <li><a onclick="showPage('listings')">Hébergements</a></li>
+        <li><a onclick="showPage('sports')">Sports</a></li>
+        <li><a onclick="openAuth('login')">Connexion</a></li>
+      </ul></div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2026 VistaMorocco. Tous droits réservés.</span>
+      <span>🇲🇦 Fait avec ♥ pour le Maroc</span>
+    </div>
+  </footer>
+</div>
+
+<!-- SPORTS -->
+<div id="page-sports" class="page">
+  <div class="ph"><div class="ph-inner">
+    <div class="bc"><span onclick="showPage('home')">Accueil</span><i class="fas fa-chevron-right"></i><span>Sports & Activités</span></div>
+    <h1>Sports & <em>Activités</em></h1>
+    <p>Football, padel, surf, randonnée & bien plus dans tout le Maroc</p>
+  </div></div>
+
+  <div class="sec sec-dark" style="padding:40px 5%">
+    <div class="sec-inner">
+      <div class="fb-banner" onclick="openLineUp()">
+        <div class="fb-ball-wrap"><div class="fb-ball"><div class="fb-ball-in"></div></div></div>
+        <div class="fb-txt">
+          <div class="fb-ey">⚽ FOOTBALL INTERACTIF</div>
+          <div class="fb-title">LINE UP FUTSAL</div>
+          <div class="fb-sub">Créez votre formation · Ajoutez des photos · Partagez votre équipe</div>
+          <div class="fb-feats"><span>📸 Photos joueurs</span><span>🎮 Drag & Drop</span><span>🏆 6 formations</span><span>💾 Export PNG</span></div>
+        </div>
+        <div class="fb-cta-side">
+          <div class="fb-cta-btn"><span>Créer ma formation</span><i class="fas fa-arrow-right"></i></div>
+          <div class="fb-mini"><div class="fm-line"></div><div class="fm-circle"></div>
+            <div class="fm-dot" style="left:50%;top:85%"></div><div class="fm-dot" style="left:25%;top:65%"></div>
+            <div class="fm-dot" style="left:75%;top:65%"></div><div class="fm-dot" style="left:25%;top:40%"></div>
+            <div class="fm-dot" style="left:75%;top:40%"></div><div class="fm-dot" style="left:50%;top:18%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-inner">
+      <div class="eyebrow">Filtrer par ville</div>
+      <div class="sec-title">Sports par <em>destination</em></div>
+      <div class="ornament"><div class="orn-line"></div><span class="orn-star">✦</span><div class="orn-line"></div></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px" id="sportsCityFilter">
+        <button class="comp-badge on" onclick="filterSportsCity('',this)">🇲🇦 Toutes</button>
+        <button class="comp-badge" onclick="filterSportsCity('Casablanca',this)">🏙️ Casablanca</button>
+        <button class="comp-badge" onclick="filterSportsCity('Marrakech',this)">🕌 Marrakech</button>
+        <button class="comp-badge" onclick="filterSportsCity('Fès',this)">🏺 Fès</button>
+        <button class="comp-badge" onclick="filterSportsCity('Rabat',this)">👑 Rabat</button>
+        <button class="comp-badge" onclick="filterSportsCity('Agadir',this)">🏖️ Agadir</button>
+        <button class="comp-badge" onclick="filterSportsCity('Essaouira',this)">🌊 Essaouira</button>
+        <button class="comp-badge" onclick="filterSportsCity('Chefchaouen',this)">💙 Chefchaouen</button>
+        <button class="comp-badge" onclick="filterSportsCity('El Jadida',this)">🏰 El Jadida</button>
+        <button class="comp-badge" onclick="filterSportsCity('Merzouga',this)">🐪 Merzouga</button>
+      </div>
+      <div id="spResCnt" style="font-size:13px;color:var(--muted);margin-top:12px"></div>
+    </div>
+  </div>
+
+  <div class="sec sec-white" style="padding:20px 5% 0">
+    <div class="sec-inner">
+      <div class="eyebrow">Filtrer par sport</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px" id="sportsTypeFilter">
+        <button class="comp-badge on" onclick="filterSportsType('',this)">🏅 Tous les sports</button>
+        <button class="comp-badge" onclick="filterSportsType('Football',this)">⚽ Football</button>
+        <button class="comp-badge" onclick="filterSportsType('Padel',this)">🎾 Padel</button>
+        <button class="comp-badge" onclick="filterSportsType('Surf',this)">🏄 Surf</button>
+        <button class="comp-badge" onclick="filterSportsType('Tennis',this)">🥎 Tennis</button>
+        <button class="comp-badge" onclick="filterSportsType('Basketball',this)">🏀 Basketball</button>
+        <button class="comp-badge" onclick="filterSportsType('Natation',this)">🏊 Natation</button>
+        <button class="comp-badge" onclick="filterSportsType('Cyclisme',this)">🚴 Cyclisme</button>
+        <button class="comp-badge" onclick="filterSportsType('Golf',this)">⛳ Golf</button>
+        <button class="comp-badge" onclick="filterSportsType('Randonnée',this)">🥾 Randonnée</button>
+        <button class="comp-badge" onclick="filterSportsType('Kitesurf',this)">🪁 Kitesurf</button>
+        <button class="comp-badge" onclick="filterSportsType('Quad',this)">🏍️ Quad</button>
+        <button class="comp-badge" onclick="filterSportsType('Escalade',this)">🧗 Escalade</button>
+        <button class="comp-badge" onclick="filterSportsType('Boxe',this)">🥊 Boxe</button>
+        <button class="comp-badge" onclick="filterSportsType('Yoga',this)">🧘 Yoga</button>
+        <button class="comp-badge" onclick="filterSportsType('Fitness',this)">💪 Fitness</button>
+        <button class="comp-badge" onclick="filterSportsType('Hammam',this)">🧖 Hammam</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec sec-alt">
+    <div class="sec-inner">
+      <div class="eyebrow">Terrains de football</div>
+      <div class="sec-title">Réservez votre <em>terrain</em></div>
+      <div class="ornament"><div class="orn-line"></div><span class="orn-star">✦</span><div class="orn-line"></div></div>
+      <div class="grid" id="footballGrid" style="margin-top:20px"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-inner">
+      <div class="eyebrow">Toutes les activités</div>
+      <div class="sec-title">Sports & <em>Loisirs</em></div>
+      <div class="ornament"><div class="orn-line"></div><span class="orn-star">✦</span><div class="orn-line"></div></div>
+      <div class="grid" id="sportsGrid" style="margin-top:20px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- LINEUP MODAL -->
+<div class="lu-modal" id="lineupModal">
+  <div class="lu-topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="lu-logo">⚽ LINE UP FUTSAL</div>
+      <div style="font-size:10px;color:#8892a4;text-transform:uppercase;letter-spacing:1px">by VistaMorocco</div>
+    </div>
+    <div class="lu-topbtns">
+      <button onclick="luExport()" style="padding:8px 16px;background:#00c853;border:none;border-radius:8px;color:#000;font-weight:700;font-size:12px;cursor:pointer;font-family:'Jost',sans-serif">📸 Sauvegarder</button>
+      <button onclick="luShare()" style="padding:8px 16px;background:#ffd600;border:none;border-radius:8px;color:#000;font-weight:700;font-size:12px;cursor:pointer;font-family:'Jost',sans-serif">🔗 Partager</button>
+      <button onclick="closeLineUp()" style="padding:8px 14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:18px;cursor:pointer;line-height:1">✕</button>
+    </div>
+  </div>
+  <div class="lu-body">
+    <div class="lu-panel lu-panel-l">
+      <div class="lu-lbl">🗂️ التشكيلة</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:6px" id="lu-fgrid">
+        <button class="lu-form-btn on" onclick="luSetForm('1-2-2',this)">2-2</button>
+        <button class="lu-form-btn" onclick="luSetForm('1-1-2-1',this)">1-2-1</button>
+        <button class="lu-form-btn" onclick="luSetForm('1-3-1',this)">3-1</button>
+        <button class="lu-form-btn" onclick="luSetForm('1-1-3',this)">1-3</button>
+        <button class="lu-form-btn" onclick="luSetForm('1-2-1-1',this)">2-1-1</button>
+        <button class="lu-form-btn" onclick="luSetForm('diamond',this)">◆</button>
+      </div>
+      <div class="lu-lbl">👕 اسم الفريق</div>
+      <input class="lu-team-in" id="lu-tA" value="FC STARS" oninput="luUpdateTeam('A')">
+      <input class="lu-team-in" id="lu-tB" value="FC LIONS" oninput="luUpdateTeam('B')" style="margin-top:5px">
+      <div class="lu-lbl">🎨 Couleur maillot</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" id="lu-swatches">
+        <div class="lu-sw on" style="background:#1565c0" onclick="luSetColor('#1565c0',this)"></div>
+        <div class="lu-sw" style="background:#c62828" onclick="luSetColor('#c62828',this)"></div>
+        <div class="lu-sw" style="background:#2e7d32" onclick="luSetColor('#2e7d32',this)"></div>
+        <div class="lu-sw" style="background:#f9a825" onclick="luSetColor('#f9a825',this)"></div>
+        <div class="lu-sw" style="background:#6a1b9a" onclick="luSetColor('#6a1b9a',this)"></div>
+        <div class="lu-sw" style="background:#111" onclick="luSetColor('#111',this)"></div>
+        <div class="lu-sw" style="background:#ff6f00" onclick="luSetColor('#ff6f00',this)"></div>
+        <div class="lu-sw" style="background:#00838f" onclick="luSetColor('#00838f',this)"></div>
+        <div class="lu-sw" style="background:#e91e63" onclick="luSetColor('#e91e63',this)"></div>
+        <div class="lu-sw" style="background:#607d8b" onclick="luSetColor('#607d8b',this)"></div>
+      </div>
+      <div class="lu-lbl">📋 Infos match</div>
+      <input class="lu-match-in" id="lu-date" value="20/03/2026" oninput="luUpdateInfo()">
+      <input class="lu-match-in" id="lu-venue" value="Salle de Sport" style="margin-top:5px" oninput="luUpdateInfo()">
+      <input class="lu-match-in" id="lu-comp" value="Championnat Futsal" style="margin-top:5px" oninput="luUpdateInfo()">
+      <div class="lu-lbl" style="margin-top:8px">🎭 Score</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input type="number" style="flex:1;padding:8px;background:#0d2018;border:1.5px solid rgba(0,200,83,.3);border-radius:8px;color:#fff;font-size:20px;font-weight:900;text-align:center;font-family:'Bebas Neue',sans-serif;outline:none" id="lu-sA" value="0" min="0" oninput="document.getElementById('lu-scoreA').textContent=this.value">
+        <span style="color:#8892a4;font-size:16px">—</span>
+        <input type="number" style="flex:1;padding:8px;background:#0d2018;border:1.5px solid rgba(0,200,83,.3);border-radius:8px;color:#fff;font-size:20px;font-weight:900;text-align:center;font-family:'Bebas Neue',sans-serif;outline:none" id="lu-sB" value="0" min="0" oninput="document.getElementById('lu-scoreB').textContent=this.value">
+      </div>
+      <div style="margin-top:auto;padding-top:12px;display:flex;flex-direction:column;gap:7px">
+        <button class="lu-gbtn grn" onclick="luAddPlayer()">+ إضافة لاعب</button>
+        <button class="lu-gbtn out" onclick="luReset()">🔄 Reset</button>
+      </div>
+    </div>
+    <div class="lu-pitch-wrap">
+      <div class="lu-pitch" id="lu-pitch" style="width:min(320px,calc((100vh - 120px)*.59));height:min(540px,calc(100vh - 120px))">
+        <div class="lu-pitch-bg"></div><div class="lu-pitch-str"></div><div class="lu-pitch-ln"></div>
+        <div class="lu-bn lu-bn-t">
+          <div class="lu-logo-c" onclick="luUploadLogo('A')" id="lu-logoA">⚽</div>
+          <div class="lu-team-disp" id="lu-tdA">FC STARS</div>
+        </div>
+        <div class="lu-bn lu-bn-b">
+          <div class="lu-logo-c" onclick="luUploadLogo('B')" id="lu-logoB">🦁</div>
+          <div class="lu-team-disp" id="lu-tdB">FC LIONS</div>
+        </div>
+        <div class="lu-score-box">
+          <div><div class="lu-sc-lbl">Équipe A</div><div class="lu-sc-num" id="lu-scoreA">0</div></div>
+          <div class="lu-sc-sep">—</div>
+          <div><div class="lu-sc-lbl">Équipe B</div><div class="lu-sc-num" id="lu-scoreB">0</div></div>
+        </div>
+        <div class="lu-info-bdg">
+          <div class="lu-ir">📅 <span id="lu-bDate">20/03/2026</span></div>
+          <div class="lu-ir">🏟️ <span id="lu-bVenue">Salle de Sport</span></div>
+          <div class="lu-ir">🏆 <span id="lu-bComp">Championnat</span></div>
+        </div>
+        <div class="lu-players" id="lu-players"></div>
+        <div class="lu-ball"><div class="lu-ball-in"></div></div>
+      </div>
+    </div>
+    <div class="lu-panel lu-panel-r">
+      <div class="lu-lbl">👥 اللاعبون</div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:5px;overflow-y:auto;min-height:0" id="lu-list"></div>
+      <button class="lu-add" onclick="luAddPlayer()" style="margin-top:8px">+ إضافة لاعب</button>
+      <div class="lu-lbl" style="margin-top:10px">🔄 الاحتياط</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap" id="lu-bench"></div>
+      <button class="lu-add" onclick="luAddBench()" style="margin-top:6px;font-size:11px;padding:7px">+ Remplaçant</button>
+      <div style="margin-top:12px;background:#071208;border:1px solid rgba(0,200,83,.15);border-radius:10px;padding:12px">
+        <div style="font-size:10px;color:#00c853;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Comment utiliser</div>
+        <div style="font-size:11px;color:#8892a4;line-height:1.8">
+          📷 <strong style="color:#fff">Clic 📷</strong> → ajouter photo<br>
+          ✋ <strong style="color:#fff">Glisser</strong> pour repositionner<br>
+          ✏️ <strong style="color:#fff">Clic nom</strong> → modifier<br>
+          © <strong style="color:#fff">© </strong> → capitaine
+        </div>
+      </div>
+    </div>
+  </div>
+  <input type="file" id="lu-upPlayer" accept="image/*" style="display:none" onchange="luHandleImg(event)">
+  <input type="file" id="lu-upLogoA" accept="image/*" style="display:none" onchange="luHandleLogo(event,'A')">
+  <input type="file" id="lu-upLogoB" accept="image/*" style="display:none" onchange="luHandleLogo(event,'B')">
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-ov" id="authModal" onclick="closeOv(event,'authModal')">
+  <div class="modal-box">
+    <button class="mc" onclick="closeModal('authModal')"><i class="fas fa-times"></i></button>
+    <div class="m-logo"><div class="logo" style="justify-content:center"><div class="logo-icon">✦</div><span class="logo-txt" style="color:var(--midnight)">Vista<span>Morocco</span></span></div></div>
+    <div class="auth-tabs">
+      <button class="at on" id="atLogin" onclick="switchAuth('login')">Connexion</button>
+      <button class="at" id="atReg" onclick="switchAuth('register')">S'inscrire</button>
+    </div>
+    <div id="formLogin">
+      <div class="m-sub">Accédez à votre espace personnel</div>
+      <button class="soc-btn" onclick="socialLogin('Google')"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg> Continuer avec Google</button>
+      <div class="divider">ou par email</div>
+      <div class="fl"><label>Email</label><input type="email" id="lEmail" placeholder="vous@exemple.com"></div>
+      <div class="fl"><label>Mot de passe</label><input type="password" id="lPwd" placeholder="••••••••"></div>
+      <button class="btn-submit" onclick="doLogin()">Se connecter</button>
+      <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:12px"><a href="#" style="color:var(--terra)">Mot de passe oublié ?</a></p>
+    </div>
+    <div id="formReg" style="display:none">
+      <div class="m-sub">Gratuit — aucune carte requise</div>
+      <button class="soc-btn" onclick="socialLogin('Google')"><svg width="18" height="18" viewBox="0 0 18 18"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg> S'inscrire avec Google</button>
+      <div class="divider">ou par email</div>
+      <div class="fl-row"><div class="fl"><label>Prénom</label><input type="text" id="rFirst" placeholder="Mohammed"></div><div class="fl"><label>Nom</label><input type="text" id="rLast" placeholder="El Idrissi"></div></div>
+      <div class="fl"><label>Email</label><input type="email" id="rEmail" placeholder="vous@exemple.com"></div>
+      <div class="fl"><label>Mot de passe (min. 8 car.)</label><input type="password" id="rPwd" placeholder="••••••••" oninput="chkPwd(this.value)"><div class="pwd-bar"><div class="pwd-fill" id="pwdFill"></div></div></div>
+      <div class="fl"><label>Téléphone</label><input type="tel" id="rPhone" placeholder="+212 6 00 00 00 00"></div>
+      <button class="btn-submit" onclick="doRegister()">Créer mon compte gratuitement</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal-ov" id="bookingModal" onclick="closeOv(event,'bookingModal')">
+  <div class="bk-modal-box">
+    <div class="bk-hd">
+      <div class="bk-hd-title" id="bkTitle">Réservation</div>
+      <button class="mc" style="position:static;margin-left:auto" onclick="closeModal('bookingModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="bk-steps">
+      <div class="bstep on" id="bs1"><div class="bstep-c">1</div><div class="bstep-lbl">Dates</div></div>
+      <div class="bstep-ln"></div>
+      <div class="bstep" id="bs2"><div class="bstep-c">2</div><div class="bstep-lbl">Paiement</div></div>
+      <div class="bstep-ln"></div>
+      <div class="bstep" id="bs3"><div class="bstep-c">✓</div><div class="bstep-lbl">Confirmé</div></div>
+    </div>
+    <!-- Step 1 -->
+    <div class="bk-panel on" id="bp1">
+      <div style="background:var(--sand);border-radius:12px;padding:14px;margin-bottom:16px;display:flex;gap:12px;align-items:center">
+        <img id="bkImg" src="" style="width:64px;height:64px;border-radius:10px;object-fit:cover;flex-shrink:0" alt="">
+        <div><div style="font-weight:700;font-size:15px;font-family:'Cormorant Garamond',serif" id="bkName"></div><div style="font-size:13px;color:var(--muted)" id="bkLoc"></div><div style="font-size:14px;font-weight:700;color:var(--terra)" id="bkPriceLbl"></div></div>
+      </div>
+      <div class="date-row">
+        <div class="df"><div class="df-lbl">Arrivée</div><input type="date" id="bkIn" onchange="calcBk()"></div>
+        <div class="df"><div class="df-lbl">Départ</div><input type="date" id="bkOut" onchange="calcBk()"></div>
+      </div>
+      <div class="g-field" style="margin-bottom:14px">
+        <div class="df-lbl">Voyageurs</div>
+        <select id="bkGuests" style="border:none;outline:none;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;color:var(--midnight);background:transparent"><option>1 personne</option><option selected>2 personnes</option><option>3 personnes</option><option>4 personnes</option><option>5+</option></select>
+      </div>
+      <div id="bkPB" style="display:none;border-top:1px solid var(--border);padding-top:12px;margin-bottom:12px">
+        <div class="pr"><span id="pbN"></span><span id="pbNC"></span></div>
+        <div class="pr"><span>Frais de service (12%)</span><span id="pbF"></span></div>
+        <div class="pr tot"><span>Total</span><span id="pbT" style="color:var(--terra)"></span></div>
+      </div>
+      <button class="btn-book-now" onclick="bkNext()">Continuer vers le paiement →</button>
+      <p style="font-size:12px;color:var(--muted);text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px"><i class="fas fa-shield-alt" style="color:var(--green)"></i> Annulation gratuite 48h avant l'arrivée</p>
+
+      <!-- Football Lineup Section (affiché uniquement pour les terrains de foot) -->
+      <div id="bkFootballSection" style="display:none;margin-top:20px;border-top:1px solid var(--border);padding-top:16px">
+        <div style="background:linear-gradient(135deg,#071a0b,#0a2410);border:1.5px solid rgba(0,200,83,.3);border-radius:14px;padding:16px">
+          <div style="font-size:10px;color:#00c853;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:6px">⚽ Composez votre équipe</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:4px">Créer ma formation</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.45);margin-bottom:14px">Ajoutez vos joueurs, photos, numéros et positions avant de réserver</div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Nom de l'équipe</div>
+            <input type="text" id="bkTeamName" placeholder="ex: FC Stars Marrakech" style="width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid rgba(0,200,83,.25);background:rgba(255,255,255,.06);color:#fff;font-family:'Jost',sans-serif;font-size:14px;outline:none">
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Nombre de joueurs</div>
+            <select id="bkPlayerCount" style="width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid rgba(0,200,83,.25);background:rgba(255,255,255,.06);color:#fff;font-family:'Jost',sans-serif;font-size:14px;outline:none">
+              <option value="5">5 joueurs (Futsal)</option>
+              <option value="7">7 joueurs (Football 7)</option>
+              <option value="11">11 joueurs (Football 11)</option>
+            </select>
+          </div>
+          <div id="bkPlayersList" style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px;max-height:200px;overflow-y:auto"></div>
+          <button onclick="bkAddPlayer()" style="width:100%;padding:9px;border-radius:9px;border:1.5px dashed rgba(0,200,83,.4);background:transparent;color:#00c853;font-family:'Jost',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s" onmouseover="this.style.background='rgba(0,200,83,.08)'" onmouseout="this.style.background='transparent'">+ Ajouter un joueur</button>
+          <button onclick="openLineUp()" style="width:100%;margin-top:8px;padding:10px;border-radius:9px;border:none;background:linear-gradient(135deg,#00c853,#007c33);color:#000;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;cursor:pointer;transition:all .2s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">⚽ Ouvrir l'éditeur complet</button>
+        </div>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div class="bk-panel" id="bp2">
+      <div class="pay-methods">
+        <div class="pm on" onclick="selPay(this,'card')"><div class="pm-icon">💳</div><div class="pm-lbl">Carte</div></div>
+        <div class="pm" onclick="selPay(this,'paypal')"><div class="pm-icon">🅿️</div><div class="pm-lbl">PayPal</div></div>
+        <div class="pm" onclick="selPay(this,'apple')"><div class="pm-icon">🍎</div><div class="pm-lbl">Apple Pay</div></div>
+      </div>
+      <div id="cardFlds">
+        <div style="position:relative;margin-bottom:10px"><input type="text" style="width:100%;padding:11px 48px 11px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Jost',sans-serif;font-size:14px;outline:none" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)"><span style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:18px">💳</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+          <input type="text" style="padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Jost',sans-serif;font-size:14px;outline:none" placeholder="MM/AA" maxlength="5" oninput="fmtExp(this)">
+          <input type="password" style="padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Jost',sans-serif;font-size:14px;outline:none" placeholder="CVV" maxlength="4">
+        </div>
+        <input type="text" style="width:100%;padding:11px 14px;border-radius:10px;border:1.5px solid var(--border);font-family:'Jost',sans-serif;font-size:14px;outline:none;margin-bottom:10px" placeholder="Nom sur la carte">
+      </div>
+      <div style="background:var(--sand);border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px"><i class="fas fa-lock" style="color:var(--green)"></i> Paiement sécurisé SSL · Stripe · PCI DSS</div>
+      <div style="display:flex;justify-content:space-between;font-weight:700;font-size:16px;margin-bottom:16px"><span>Total à payer</span><span style="color:var(--terra)" id="bkTotal2"></span></div>
+      <button class="btn-book-now" id="payBtn" onclick="processPayment()"><i class="fas fa-lock"></i> Payer maintenant</button>
+    </div>
+    <!-- Step 3 -->
+    <div class="bk-panel" id="bp3" style="text-align:center;padding:32px 24px">
+      <div class="conf-icon">✅</div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--midnight);margin-bottom:8px">Réservation confirmée !</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:20px">Référence : <strong style="color:var(--terra);font-size:16px" id="confRef"></strong></p>
+      <div style="background:var(--sand);border-radius:12px;padding:16px;margin-bottom:20px;text-align:left;font-size:14px;color:var(--muted);line-height:2" id="confDetails"></div>
+      <button class="btn-book-now" onclick="closeModal('bookingModal');showToast('📧 Email de confirmation envoyé !','ok')">Parfait, merci !</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg"></span></div>
+
+<script>
+// ═══ SPLASH SCREEN ═══
+(function(){
+  const splash = document.getElementById('splash');
+  const bar = document.getElementById('splash-progress-bar');
+  const label = document.getElementById('splash-progress-label');
+  const labels = ['Chargement...', 'Préparation...', 'Bienvenue !'];
+  let pct = 0;
+  let start = null;
+  const DURATION = 2400; // ms total
+
+  function step(ts){
+    if(!start) start = ts;
+    const elapsed = ts - start;
+    pct = Math.min(100, Math.round((elapsed / DURATION) * 100));
+    bar.style.width = pct + '%';
+
+    // Update label text
+    if(pct < 40) label.textContent = labels[0];
+    else if(pct < 80) label.textContent = labels[1];
+    else label.textContent = labels[2];
+
+    if(pct < 100){
+      requestAnimationFrame(step);
+    } else {
+      // Done — fade out
+      setTimeout(()=>{
+        splash.classList.add('fade-out');
+        setTimeout(()=>{ splash.style.display='none'; }, 850);
+      }, 300);
+    }
+  }
+
+  // Start after fonts settle
+  window.addEventListener('load', ()=>{
+    setTimeout(()=>{ requestAnimationFrame(step); }, 200);
+  });
+  // Fallback: max 5s
+  setTimeout(()=>{
+    if(splash.style.display !== 'none'){
+      splash.classList.add('fade-out');
+      setTimeout(()=>{ splash.style.display='none'; }, 850);
+    }
+  }, 5000);
+})();
+
+// ═══ DATABASE ═══
+const DB = [
+  {id:1,name:"Riad Dar Zitoun",city:"Marrakech",cat:"Riads & Hôtels",price:850,badge:"Coup de cœur",rating:4.9,reviewCount:247,desc:"Riad authentique au cœur de la médina avec patio fleuri, hammam privé et cuisine marocaine traditionnelle. 8 chambres décorées à la main par des artisans locaux.",amenities:["WiFi","Piscine","Hammam","Petit-déjeuner","Climatisation","Transferts"],tags:["Romantique","Piscine","Médina"],img:"https://images.unsplash.com/photo-1597211684565-dca64d72bdfe?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1597211684565-dca64d72bdfe?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1548078018-4af13bdf1e3a?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Sophie L.",flag:"🇫🇷",rating:5,color:"#c4622d",text:"Un riad de rêve, le service est impeccable. Le patio est magnifique au lever du soleil."},{name:"Carlos M.",flag:"🇪🇸",rating:5,color:"#2d7a4f",text:"Expérience incroyable. Le hammam privé est un must. Cuisine délicieuse."},{name:"Anna K.",flag:"🇩🇪",rating:4,color:"#2c6b8a",text:"Très belle adresse. Le petit-déjeuner sur la terrasse est magique."}]},
+  {id:2,name:"Riad Yasmine",city:"Marrakech",cat:"Riads & Hôtels",price:700,badge:"Populaire",rating:4.8,reviewCount:312,desc:"Riad de charme avec piscine d'eau de rose, hammam privé et chambres poétiques. Vue panoramique depuis la terrasse sur les toits de la médina.",amenities:["WiFi","Piscine","Hammam","Petit-déjeuner","Terrasse panoramique","Cours de cuisine"],tags:["Vue médina","Piscine","Romantique"],img:"https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1597211684565-dca64d72bdfe?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1548078018-4af13bdf1e3a?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Marie D.",flag:"🇧🇪",rating:5,color:"#c4622d",text:"La piscine est absolument magnifique. Décoration soignée, personnel adorable."},{name:"James W.",flag:"🇬🇧",rating:5,color:"#2d7a4f",text:"Perfect stay. The rooftop view at sunset is unforgettable."}]},
+  {id:3,name:"Restaurant Al Fassia",city:"Marrakech",cat:"Restaurants",price:280,badge:"Institution",rating:4.9,reviewCount:589,desc:"Restaurant gastronomique 100% géré par des femmes. La cuisine berbère la plus raffinée de Marrakech — tajines, couscous et pastilla au pigeon dans un cadre élégant.",amenities:["Terrasse","Vin marocain","Menu végétarien","Privatisation","Parking","Réservation recommandée"],tags:["Gastronomique","Traditionnel","Femmes chefs"],img:"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1476224203421-9ac39bcb3b42?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Pierre M.",flag:"🇫🇷",rating:5,color:"#c4622d",text:"La pastilla au pigeon est exceptionnelle. Service irréprochable."},{name:"Lucia B.",flag:"🇮🇹",rating:5,color:"#9c4820",text:"Best restaurant in Marrakech! The couscous was divine."}]},
+  {id:4,name:"Hammam Al Bacha",city:"Marrakech",cat:"Hammams & Spas",price:150,badge:"Historique",rating:4.7,reviewCount:423,desc:"Hammam royal classé monument historique. Expérience ancestrale dans un cadre de marbre et zellige du XVIIIe siècle. Gommage argan et massage traditionnel.",amenities:["Gommage argan","Massage huile","Savon beldi","Privatisation","Produits naturels","Vestiaires"],tags:["Historique","Zellige","Authentique"],img:"https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1612198790700-bb3b8186b16e?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Nathalie R.",flag:"🇫🇷",rating:5,color:"#6a1b9a",text:"Une expérience hors du temps. Les zellige sont magnifiques."},{name:"Omar F.",flag:"🇲🇦",rating:4,color:"#2d7a4f",text:"Le meilleur hammam de Marrakech. Le gommage à l'argan est excellent."}]},
+  {id:5,name:"Hôtel Casablanca Bay",city:"Casablanca",cat:"Riads & Hôtels",price:620,badge:"Moderne",rating:4.6,reviewCount:178,desc:"Hôtel contemporain avec vue sur la Corniche et l'Atlantique. Chambres élégantes, piscine sur le toit, spa et restaurant gastronomique.",amenities:["WiFi","Piscine rooftop","Spa","Restaurant","Bar","Parking"],tags:["Vue mer","Moderne","Business"],img:"https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Ahmed K.",flag:"🇲🇦",rating:5,color:"#185fa5",text:"Hôtel excellent, vue incroyable sur l'Atlantique."},{name:"Sarah J.",flag:"🇺🇸",rating:4,color:"#2d7a4f",text:"Great location. Staff very helpful. Breakfast was delicious."}]},
+  {id:6,name:"Rick's Café",city:"Casablanca",cat:"Restaurants",price:350,badge:"Légendaire",rating:4.8,reviewCount:892,desc:"Restaurant emblématique inspiré du film Casablanca. Cuisine internationale et marocaine dans un décor art déco avec musique live chaque soir.",amenities:["Musique live","Bar","Cocktails","Vue patio","Menu végétarien","Carte des vins"],tags:["Légendaire","Musique live","Art Déco"],img:"https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1530062845289-9109b2c9c868?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Jean-Paul V.",flag:"🇫🇷",rating:5,color:"#1a1410",text:"Incontournable! L'ambiance, la musique, la cuisine... tout est parfait."},{name:"Emma T.",flag:"🇬🇧",rating:5,color:"#2d7a4f",text:"The pianist was amazing. A must-visit in Casablanca."}]},
+  {id:7,name:"Riad Laaroussa",city:"Fès",cat:"Riads & Hôtels",price:950,badge:"Excellence",rating:5.0,reviewCount:156,desc:"Riad du XVe siècle entièrement restauré dans la médina de Fès el-Bali. Zellige et stuc d'exception. Vue imprenable depuis la terrasse panoramique.",amenities:["WiFi","Terrasse panoramique","Petit-déjeuner","Hammam","Visites guidées","Cuisine sur commande"],tags:["Luxe","Médina","Architecture"],img:"https://images.unsplash.com/photo-1548078018-4af13bdf1e3a?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1548078018-4af13bdf1e3a?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1597211684565-dca64d72bdfe?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Isabelle P.",flag:"🇨🇭",rating:5,color:"#c4622d",text:"Le meilleur riad au Maroc! Chaque détail est parfait."},{name:"David R.",flag:"🇺🇸",rating:5,color:"#2d7a4f",text:"Absolutely stunning architecture. Service beyond expectations."}]},
+  {id:8,name:"Tanneries Chouara",city:"Fès",cat:"Culture & Visites",price:120,badge:"UNESCO",rating:4.8,reviewCount:1240,desc:"Visite guidée des célèbres tanneries Chouara classées UNESCO. Vue depuis les terrasses sur les cuves colorées, avec guide francophone expert.",amenities:["Guide francophone","Vue rooftop","Artisanat","Photos libres","Groupe max 10","Entrée tanneries"],tags:["UNESCO","Incontournable","Artisanat"],img:"https://images.unsplash.com/photo-1558171813-8ca7a8c30282?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1558171813-8ca7a8c30282?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1531973486364-5fa64260d75b?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1597212618440-806262de4f8b?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"François B.",flag:"🇫🇷",rating:5,color:"#c9a84c",text:"Guide excellent, très pédagogue. Les tanneries sont spectaculaires."},{name:"Marta G.",flag:"🇪🇸",rating:5,color:"#2d7a4f",text:"Absolutamente increíble. El guía era fantástico."}]},
+  {id:9,name:"Riad Dar Echchaouen",city:"Chefchaouen",cat:"Riads & Hôtels",price:420,badge:"Coup de cœur",rating:4.9,reviewCount:203,desc:"Riad bleu et blanc au cœur de la médina de Chefchaouen. Terrasse avec vue imprenable sur les toits bleus et les montagnes du Rif.",amenities:["WiFi","Terrasse vue médina","Petit-déjeuner","Thé berbère","Photos guidées","Randonnée"],tags:["Ville bleue","Vue Rif","Calme"],img:"https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1539650116574-75c0c6d73aeb?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1560969184-10fe8719e047?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Laura S.",flag:"🇮🇹",rating:5,color:"#2c6b8a",text:"La ciudad más bonita de Marruecos. El riad es perfecto."},{name:"Thomas M.",flag:"🇩🇪",rating:5,color:"#2d7a4f",text:"Chefchaouen is like a dream. Best rooftop view."}]},
+  {id:10,name:"Surf School Taghazout",city:"Agadir",cat:"Surf & Plage",price:300,badge:"Top expérience",rating:4.9,reviewCount:634,desc:"École de surf au spot mythique de Taghazout. Cours tous niveaux avec instructeurs certifiés, matériel fourni. Sessions vidéo incluses.",amenities:["Planche fournie","Combinaison","Instructeur certifié","Vidéo analyse","Transferts","Café surfer"],tags:["Surf","Taghazout","Débutants OK"],img:"https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1455267847942-f6cda5e6e1c0?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Jake P.",flag:"🇦🇺",rating:5,color:"#2c6b8a",text:"Best surf experience! Great instructors, perfect waves."},{name:"Léa B.",flag:"🇫🇷",rating:5,color:"#c4622d",text:"Cours parfait pour débutante. Instructeur patient, ambiance géniale!"}]},
+  {id:11,name:"Villa Maroc Essaouira",city:"Essaouira",cat:"Riads & Hôtels",price:780,badge:"Charme",rating:4.8,reviewCount:267,desc:"Maison d'hôtes dans les remparts d'Essaouira. Chambres artisanales uniques, terrasse avec vue sur l'Atlantique et les fortifications.",amenities:["WiFi","Terrasse mer","Petit-déjeuner","Hammam","Vélos","Excursions"],tags:["Vue mer","Remparts","Artisanal"],img:"https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1539650116574-75c0c6d73aeb?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Clémence F.",flag:"🇫🇷",rating:5,color:"#2c6b8a",text:"Essaouira est magique et cette villa est parfaite."},{name:"Paul N.",flag:"🇬🇧",rating:4,color:"#2d7a4f",text:"Beautiful property with amazing sea views."}]},
+  {id:12,name:"Bivouac Erg Chebbi",city:"Merzouga",cat:"Excursions",price:900,badge:"Inoubliable",rating:5.0,reviewCount:445,desc:"Nuit en haïma berbère de luxe avec dîner traditionnel au coin du feu, musique gnaoua live et lever du soleil sur les dunes de l'Erg Chebbi.",amenities:["Dîner inclus","Musique gnaoua","Dromadaires","Lever soleil","Transfert","Thé nomade"],tags:["Sahara","Dunes","Unique"],img:"https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1493558103817-58b2924bce98?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Lucas B.",flag:"🇨🇭",rating:5,color:"#c9a84c",text:"Le lever de soleil sur les dunes... expérience de vie."},{name:"Aisha M.",flag:"🇲🇦",rating:5,color:"#c4622d",text:"Le Sahara sous les étoiles avec la musique gnaoua. Inoubliable."}]},
+  {id:13,name:"Quad & Sandboard Merzouga",city:"Merzouga",cat:"Excursions",price:450,badge:"Adrénaline",rating:4.8,reviewCount:312,desc:"Circuit quad dans les dunes de l'Erg Chebbi + initiation sandboard. Guide expérimenté, casque et équipement fournis.",amenities:["Quad fourni","Casque","Sandboard","Guide","Photos/vidéos","Eau et snack"],tags:["Adrénaline","Dunes","Famille OK"],img:"https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1493558103817-58b2924bce98?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Tom H.",flag:"🇬🇧",rating:5,color:"#c9a84c",text:"Absolutely epic! The dunes are massive and the quad was a blast."},{name:"Yasmine T.",flag:"🇫🇷",rating:5,color:"#c4622d",text:"Expérience folle! Le sandboard c'est addictif!"}]},
+  {id:14,name:"Riad Dar Al Assil",city:"El Jadida",cat:"Riads & Hôtels",price:480,badge:"Nouvelle adresse",rating:4.7,reviewCount:89,desc:"Riad portugais face à la mer avec patio de zellige bleu et blanc. Vue sur la Cité Portugaise classée UNESCO.",amenities:["Vue mer","Patio zellige","Petit-déjeuner","WiFi","Transferts","Visite guidée"],tags:["Vue mer","UNESCO","Calme"],img:"https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1560969184-10fe8719e047?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1553484771-371a605b060b?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1539650116574-75c0c6d73aeb?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Mohamed B.",flag:"🇲🇦",rating:5,color:"#2c6b8a",text:"La citerne portugaise vue du riad le soir... magique."},{name:"Claire V.",flag:"🇫🇷",rating:4,color:"#c4622d",text:"El Jadida est méconnue et magnifique. Belle surprise."}]},
+  {id:15,name:"Hôtel La Tour Hassan",city:"Rabat",cat:"Riads & Hôtels",price:1100,badge:"Palace",rating:4.7,reviewCount:198,desc:"Palace emblématique de Rabat face à la Tour Hassan et le Mausolée Mohammed V. Jardins andalous, piscine et spa.",amenities:["WiFi","Piscine","Spa","Restaurant","Jardin andalou","Concierge"],tags:["Luxe","Palace","Vue Tour Hassan"],img:"https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=600&q=80",imgs:["https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80","https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=400&q=80","https://images.unsplash.com/photo-1597211684565-dca64d72bdfe?auto=format&fit=crop&w=400&q=80"],reviews:[{name:"Nadia A.",flag:"🇫🇷",rating:5,color:"#2d7a4f",text:"Palace magnifique. Vue sur la Tour Hassan depuis la chambre."},{name:"Richard P.",flag:"🇬🇧",rating:4,color:"#185fa5",text:"Wonderful historic hotel. The Andalusian garden is perfect."}]},
+];
+
+const SPORTS = [
+  {id:'s1',name:'Club de Football Maarif',city:'Casablanca',type:'Football',price:80,unit:'MAD/h',img:'https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=600&q=80',rating:4.7,loc:'Maarif'},
+  {id:'s2',name:'Padel Arena Guéliz',city:'Marrakech',type:'Padel',price:120,unit:'MAD/h',img:'https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=600&q=80',rating:4.8,loc:'Guéliz'},
+  {id:'s3',name:'Surf School Taghazout',city:'Agadir',type:'Surf',price:300,unit:'MAD',img:'https://images.unsplash.com/photo-1455267847942-f6cda5e6e1c0?auto=format&fit=crop&w=600&q=80',rating:4.9,loc:'Taghazout'},
+  {id:'s4',name:'Tennis Club Agdal',city:'Rabat',type:'Tennis',price:100,unit:'MAD/h',img:'https://images.unsplash.com/photo-1516834611397-8d633f9dd0af?auto=format&fit=crop&w=600&q=80',rating:4.6,loc:'Agdal'},
+  {id:'s5',name:'Randonnée Jebel Rif',city:'Chefchaouen',type:'Randonnée',price:200,unit:'MAD',img:'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?auto=format&fit=crop&w=600&q=80',rating:4.9,loc:'Jebel Rif'},
+  {id:'s6',name:'Kitesurf Essaouira',city:'Essaouira',type:'Kitesurf',price:400,unit:'MAD',img:'https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=600&q=80',rating:4.8,loc:'Plage'},
+  {id:'s7',name:'Quad & Sandboard Dunes',city:'Merzouga',type:'Quad',price:450,unit:'MAD',img:'https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=600&q=80',rating:5.0,loc:'Erg Chebbi'},
+  {id:'s8',name:'Hammam Sport & Spa',city:'Fès',type:'Hammam',price:120,unit:'MAD',img:'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80',rating:4.7,loc:'Médina'},
+  {id:'s9',name:'Terrain Football Hay Riad',city:'Rabat',type:'Football',price:90,unit:'MAD/h',img:'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80',rating:4.5,loc:'Hay Riad'},
+  {id:'s10',name:'CrossFit Ain Diab',city:'Casablanca',type:'Fitness',price:60,unit:'MAD',img:'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=600&q=80',rating:4.8,loc:'Ain Diab'},
+  {id:'s11',name:'Yoga Palmeraie',city:'Marrakech',type:'Yoga',price:150,unit:'MAD',img:'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=80',rating:4.9,loc:'Palmeraie'},
+  {id:'s12',name:'Surf Sidi Bouzid',city:'El Jadida',type:'Surf',price:250,unit:'MAD',img:'https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=600&q=80',rating:4.6,loc:'Sidi Bouzid'},
+  {id:'s13',name:'Terrain Football Bernabeu Casa',city:'Casablanca',type:'Football',price:100,unit:'MAD/h',img:'https://images.unsplash.com/photo-1508098682722-e99c643e7f0c?auto=format&fit=crop&w=600&q=80',rating:4.8,loc:'Hay Hassani'},
+  {id:'s14',name:'Padel Club Agdal',city:'Rabat',type:'Padel',price:130,unit:'MAD/h',img:'https://images.unsplash.com/photo-1612459285022-cac4e0d6de0f?auto=format&fit=crop&w=600&q=80',rating:4.7,loc:'Agdal'},
+  {id:'s15',name:'Basketball Maârif',city:'Casablanca',type:'Basketball',price:70,unit:'MAD/h',img:'https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=600&q=80',rating:4.5,loc:'Maârif'},
+  {id:'s16',name:'Tennis Royal Marrakech',city:'Marrakech',type:'Tennis',price:150,unit:'MAD/h',img:'https://images.unsplash.com/photo-1620742812397-7f9b45fa9879?auto=format&fit=crop&w=600&q=80',rating:4.9,loc:'Hivernage'},
+  {id:'s17',name:'Natation Olympic Fès',city:'Fès',type:'Natation',price:50,unit:'MAD',img:'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=600&q=80',rating:4.6,loc:'Narjis'},
+  {id:'s18',name:'Vélo Essaouira Tour',city:'Essaouira',type:'Cyclisme',price:180,unit:'MAD',img:'https://images.unsplash.com/photo-1558979158-65a1eaa08691?auto=format&fit=crop&w=600&q=80',rating:4.8,loc:'Médina'},
+  {id:'s19',name:"Tir à l'Arc Agadir",city:'Agadir',type:"Tir à l'arc",price:120,unit:'MAD',img:'https://images.unsplash.com/photo-1518259102261-b40117eabbc9?auto=format&fit=crop&w=600&q=80',rating:4.7,loc:'Centre-ville'},
+  {id:'s20',name:'Football Hay Riad Premium',city:'Rabat',type:'Football',price:110,unit:'MAD/h',img:'https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=600&q=80',rating:4.9,loc:'Hay Riad'},
+  {id:'s21',name:'Boxe & Arts Martiaux',city:'Casablanca',type:'Boxe',price:80,unit:'MAD',img:'https://images.unsplash.com/photo-1549476464-37392f717541?auto=format&fit=crop&w=600&q=80',rating:4.7,loc:'Centre-ville'},
+  {id:'s22',name:'Golf Royal Dar Es Salam',city:'Rabat',type:'Golf',price:500,unit:'MAD',img:'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?auto=format&fit=crop&w=600&q=80',rating:4.9,loc:'Dar Es Salam'},
+  {id:'s23',name:'Escalade Atlas',city:'Marrakech',type:'Escalade',price:350,unit:'MAD',img:'https://images.unsplash.com/photo-1516592673884-4a382d1124c2?auto=format&fit=crop&w=600&q=80',rating:4.8,loc:'Haut Atlas'},
+];
+
+// ═══ STATE ═══
+let currentUser = JSON.parse(localStorage.getItem('vm_user')||'null');
+let saved = JSON.parse(localStorage.getItem('vm_saved')||'[]');
+let bkItem = null;
+let bkTotal = 0;
+let spCityFilter = '';
+let spTypeFilter = '';
+let listCityFilter = '';
+
+// ═══ INIT ═══
+document.addEventListener('DOMContentLoaded',()=>{
+  const t = new Date(); t.setDate(t.getDate()+1);
+  const t2 = new Date(); t2.setDate(t2.getDate()+7);
+  const fmt = d=>d.toISOString().split('T')[0];
+  ['hIn','bkIn'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=fmt(t);});
+  ['hOut','bkOut'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=fmt(t2);});
+  renderHome();
+  if(currentUser) updateNav();
+  // Animate stats
+  animNum('cnt1',2400);
+  animNum('cnt2',12500);
+  window.addEventListener('scroll',()=>{
+    document.querySelector('.nav').style.boxShadow = window.scrollY>20 ? '0 2px 20px rgba(0,0,0,.4)' : 'none';
+  });
+});
+
+function animNum(id,target){
+  const el=document.getElementById(id);
+  if(!el)return;
+  let v=0; const step=target/60;
+  const t=setInterval(()=>{v=Math.min(v+step,target);el.textContent=Math.round(v).toLocaleString()+'+';if(v>=target)clearInterval(t);},16);
+}
+
+// ═══ PAGES ═══
+function showPage(p){
+  document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
+  const el=document.getElementById('page-'+p);
+  if(!el){console.warn('No page: page-'+p);return;}
+  el.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(p==='listings') renderListings();
+  if(p==='sports'){ renderSports(); setTimeout(initLineUp,80); }
+  if(p==='cars'){ renderCars(); }
+}
+
+// ═══ RENDER HOME ═══
+function renderHome(){
+  const el=document.getElementById('homeFeatured');
+  if(el) el.innerHTML=DB.slice(0,6).map(buildCard).join('');
+}
+
+// ═══ CARD HTML ═══
+function buildCard(item){
+  const sv=saved.includes(item.id);
+  const stars='★'.repeat(Math.floor(item.rating))+(item.rating%1>=.5?'★':'');
+  const bc=item.badge==='Coup de cœur'||item.badge==='Inoubliable'?'':item.badge==='Top expérience'?'grn':'';
+  return `<div class="card" onclick="openDetail(${item.id})">
+    <div class="card-img">
+      <img src="${item.img}" alt="${item.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=600&q=80'">
+      <span class="c-badge ${bc}">${item.badge}</span>
+      <button class="c-save ${sv?'on':''}" onclick="event.stopPropagation();toggleSave(${item.id},this)"><i class="${sv?'fas':'far'} fa-heart"></i></button>
+    </div>
+    <div class="card-body">
+      <div class="c-city"><i class="fas fa-map-marker-alt"></i> ${item.city} · ${item.cat}</div>
+      <div class="c-name">${item.name}</div>
+      <div class="c-rating"><span class="c-stars">${stars}</span><span class="c-rnum">${item.rating}</span><span class="c-rcnt">(${item.reviewCount.toLocaleString()} avis)</span></div>
+      <div class="c-tags">${item.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <div class="card-foot">
+        <div><div class="c-pfrom">À partir de</div><span class="c-price">${item.price.toLocaleString()}</span><span class="c-punit"> MAD</span></div>
+        <button class="btn-rsv" onclick="event.stopPropagation();openBooking(${item.id})">Réserver</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══ LISTINGS ═══
+function renderListings(){
+  let data=[...DB];
+  const city=document.getElementById('lCity')?.value||listCityFilter;
+  const cat=document.getElementById('lCat')?.value||'';
+  const sort=document.getElementById('lSort')?.value||'rating';
+  if(city) data=data.filter(d=>d.city===city);
+  if(cat) data=data.filter(d=>d.cat===cat);
+  if(sort==='price_asc') data.sort((a,b)=>a.price-b.price);
+  else if(sort==='price_desc') data.sort((a,b)=>b.price-a.price);
+  else data.sort((a,b)=>b.rating-a.rating);
+  const g=document.getElementById('listGrid');
+  if(g) g.innerHTML=data.length?data.map(buildCard).join(''):'<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:40px">Aucun résultat pour cette recherche.</p>';
+  const rc=document.getElementById('resCnt');
+  if(rc) rc.textContent=data.length+' résultat'+(data.length>1?'s':'');
+}
+
+function setCityFilter(city,btn){
+  listCityFilter=city;
+  document.querySelectorAll('.filter-row .fb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const sel=document.getElementById('lCity');
+  if(sel) sel.value=city;
+  renderListings();
+}
+
+// ═══ DETAIL ═══
+function openDetail(id){
+  const item=DB.find(x=>x.id===id);
+  if(!item){showToast('Annonce introuvable');return;}
+  const stars='★'.repeat(Math.floor(item.rating));
+  const rvHTML=item.reviews.map(r=>`<div class="rev-card"><div class="rev-head"><div class="rev-av" style="background:${r.color}">${r.name[0]}</div><div><div class="rev-nm">${r.name} ${r.flag}</div><div class="rev-stars">${'★'.repeat(r.rating)}</div></div></div><div class="rev-txt">${r.text}</div></div>`).join('');
+  const t=new Date();t.setDate(t.getDate()+1);const t2=new Date();t2.setDate(t2.getDate()+7);
+  const fmt=d=>d.toISOString().split('T')[0];
+  const nights=6,base=item.price*nights,fees=Math.round(base*.12),total=base+fees;
+  document.getElementById('detailContent').innerHTML=`
+  <div class="ph"><div class="ph-inner">
+    <div class="bc"><span onclick="showPage('home')">Accueil</span><i class="fas fa-chevron-right"></i><span onclick="showPage('listings')">${item.cat}</span><i class="fas fa-chevron-right"></i><span>${item.name}</span></div>
+    <h1>${item.name}</h1><p>${item.city} · ${item.cat}</p>
+  </div></div>
+  <div class="det-wrap">
+    <div class="gallery">
+      ${item.imgs.map((img,i)=>`<div class="gi" onclick="openLB(${JSON.stringify(item.imgs)},${i})"><img src="${img}" alt="" loading="lazy">${i===4?'<div class="gi-more">+5 photos</div>':''}</div>`).join('')}
+    </div>
+    <div class="det-layout">
+      <div>
+        <div class="det-city"><i class="fas fa-map-marker-alt"></i> ${item.city} · ${item.cat}</div>
+        <h1 class="det-name">${item.name}</h1>
+        <div class="det-meta">
+          <div class="det-rating"><i class="fas fa-star"></i> ${item.rating}</div>
+          <span style="font-size:13px;color:var(--muted)">${item.reviewCount.toLocaleString()} avis vérifiés</span>
+          <span class="c-badge" style="position:static">${item.badge}</span>
+        </div>
+        <div class="c-tags" style="margin-bottom:16px">${item.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        <p class="det-desc">${item.desc}</p>
+        <div class="det-sec">
+          <h3 class="det-sec-title">Ce qui est inclus</h3>
+          <div class="am-grid">${item.amenities.map(a=>`<div class="am"><i class="fas fa-check-circle"></i> ${a}</div>`).join('')}</div>
+        </div>
+        <div class="det-sec">
+          <h3 class="det-sec-title">Avis des voyageurs (${item.reviewCount.toLocaleString()})</h3>
+          ${rvHTML}
+        </div>
+      </div>
+      <div>
+        <div class="bw">
+          <div class="bw-price"><span class="bw-pval">${item.price.toLocaleString()}</span><span class="bw-punit"> MAD / nuit</span></div>
+          <div class="bw-rating"><i class="fas fa-star" style="color:var(--gold)"></i> ${item.rating} · ${item.reviewCount.toLocaleString()} avis</div>
+          <div class="date-row">
+            <div class="df"><div class="df-lbl">Arrivée</div><input type="date" id="dIn" value="${fmt(t)}" onchange="wCalc(${item.id})"></div>
+            <div class="df"><div class="df-lbl">Départ</div><input type="date" id="dOut" value="${fmt(t2)}" onchange="wCalc(${item.id})"></div>
+          </div>
+          <div class="g-field"><div class="df-lbl">Voyageurs</div><select style="border:none;outline:none;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;color:var(--midnight);background:transparent"><option>1 pers.</option><option selected>2 pers.</option><option>3 pers.</option><option>4 pers.</option></select></div>
+          <div class="pb" id="wPB">
+            <div class="pr"><span id="wN">${item.price.toLocaleString()} × ${nights} nuits</span><span id="wNC">${base.toLocaleString()} MAD</span></div>
+            <div class="pr"><span>Frais de service</span><span id="wF">${fees.toLocaleString()} MAD</span></div>
+            <div class="pr tot"><span>Total</span><span id="wT" style="color:var(--terra)">${total.toLocaleString()} MAD</span></div>
+          </div>
+          <button class="btn-book-now" onclick="openBooking(${item.id})"><i class="fas fa-calendar-check"></i> Réserver maintenant</button>
+          <p class="w-note"><i class="fas fa-shield-alt" style="color:var(--green)"></i> Annulation gratuite 48h avant</p>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  window._detItem=item;
+  showPage('detail');
+}
+
+function wCalc(id){
+  const item=DB.find(x=>x.id===id)||window._detItem;
+  if(!item)return;
+  const ci=new Date(document.getElementById('dIn')?.value);
+  const co=new Date(document.getElementById('dOut')?.value);
+  if(isNaN(ci)||isNaN(co)||co<=ci)return;
+  const n=Math.round((co-ci)/864e5),base=item.price*n,fees=Math.round(base*.12),tot=base+fees;
+  const s=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  s('wN',`${item.price.toLocaleString()} × ${n} nuit${n>1?'s':''}`);
+  s('wNC',base.toLocaleString()+' MAD'); s('wF',fees.toLocaleString()+' MAD'); s('wT',tot.toLocaleString()+' MAD');
+}
+
+// ═══ SEARCH ═══
+function doSearch(){
+  const city=document.getElementById('hCity').value;
+  const cat=document.getElementById('hCat')?.value||'';
+  listCityFilter=city;
+  if(city){const s=document.getElementById('lCity');if(s)s.value=city;}
+  if(cat){
+    const sc=document.getElementById('lCat');if(sc)sc.value=cat;
+    const h=document.getElementById('listPageH1');if(h)h.innerHTML=(cat||'Toutes les')+' <em>'+(cat?'au Maroc':'annonces')+'</em>';
+  } else {
+    const sc=document.getElementById('lCat');if(sc)sc.value='';
+  }
+  showPage('listings');
+}
+function quickCity(city){
+  listCityFilter=city;
+  const s=document.getElementById('lCity');if(s)s.value=city;
+  showPage('listings');
+}
+function syncCity(v){const s=document.getElementById('lCity');if(s)s.value=v;}
+function filterCat(cat){
+  listCityFilter='';
+  const sc=document.getElementById('lCity');if(sc)sc.value='';
+  const sl=document.getElementById('lCat');if(sl)sl.value=cat;
+  // Update page header
+  const h=document.getElementById('listPageH1');if(h)h.innerHTML=cat+' <em>au Maroc</em>';
+  const s=document.getElementById('listPageSub');if(s)s.textContent='Les meilleures adresses de la catégorie '+cat;
+  showPage('listings');
+}
+
+// ═══ SAVE ═══
+function toggleSave(id,btn){
+  if(!currentUser){openAuth('login');showToast('Connectez-vous pour sauvegarder');return;}
+  if(saved.includes(id)){saved=saved.filter(x=>x!==id);btn.classList.remove('on');btn.innerHTML='<i class="far fa-heart"></i>';showToast('Retiré des favoris');}
+  else{saved.push(id);btn.classList.add('on');btn.innerHTML='<i class="fas fa-heart"></i>';showToast('❤️ Ajouté aux favoris !','ok');}
+  localStorage.setItem('vm_saved',JSON.stringify(saved));
+}
+
+// ═══ SPORTS ═══
+function renderSports(){
+  let data=spCityFilter?SPORTS.filter(s=>s.city===spCityFilter):SPORTS;
+  if(spTypeFilter) data=data.filter(s=>s.type===spTypeFilter);
+  const football=data.filter(s=>s.type==='Football');
+  const others=data.filter(s=>s.type!=='Football');
+  const fg=document.getElementById('footballGrid');
+  if(fg)fg.innerHTML=football.length?football.map(buildSportCard).join(''):'<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:20px;font-size:14px">Aucun terrain de football dans cette ville.</p>';
+  const sg=document.getElementById('sportsGrid');
+  if(sg)sg.innerHTML=others.length?others.map(buildSportCard).join(''):'<p style="color:var(--muted);grid-column:1/-1;text-align:center;padding:20px;font-size:14px">Aucune activité trouvée.</p>';
+  const rc=document.getElementById('spResCnt');
+  if(rc)rc.textContent=data.length+' activité'+(data.length>1?'s':'');
+}
+
+function buildSportCard(s){
+  return `<div class="card" onclick="openSportDetail('${s.id}')">
+    <div class="card-img">
+      <img src="${s.img}" alt="${s.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=600&q=80'">
+      <span class="c-badge">${s.type}</span>
+      <div class="c-save" onclick="event.stopPropagation()" style="cursor:default"><i class="fas fa-star" style="color:var(--gold)"></i></div>
+    </div>
+    <div class="card-body">
+      <div class="c-city"><i class="fas fa-map-marker-alt"></i> ${s.city} · ${s.loc}</div>
+      <div class="c-name">${s.name}</div>
+      <div class="c-rating"><span class="c-stars">${'★'.repeat(Math.floor(s.rating))}</span><span class="c-rnum">${s.rating}</span><span class="c-rcnt">Activité vérifiée</span></div>
+      <div class="card-foot">
+        <div><div class="c-pfrom">À partir de</div><span class="c-price">${s.price.toLocaleString()}</span><span class="c-punit"> ${s.unit}</span></div>
+        <button class="btn-rsv" onclick="event.stopPropagation();openSportBooking('${s.id}')">Réserver</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openSportDetail(sid){
+  const s=SPORTS.find(x=>x.id===sid);
+  if(!s)return;
+  // Sport amenities based on type
+  const amenMap={
+    'Football':['Terrain synthétique','Vestiaires','Douches','Éclairage','Parking','Arbitre disponible'],
+    'Padel':['Court couvert','Raquettes louées','Vestiaires','Bar/Café','Cours possible','Tournois'],
+    'Surf':['Planche fournie','Combinaison','Instructeur certifié','Vidéo analyse','Transferts','Snack bar'],
+    'Tennis':['Court en dur','Raquettes louées','Balles incluses','Coach possible','Vestiaires','Parking'],
+    'Randonnée':['Guide certifié','Équipement rando','Eau et snack','Photos du parcours','Transfert','Assurance'],
+    'Kitesurf':['Matériel fourni','Instructeur','Plage privée','Combinaison','GoPro incluse','Transport'],
+    'Quad':['Quad fourni','Casque','Guide','Photos/vidéos','Eau et snack','Assurance'],
+    'Hammam':['Gommage argan','Massage huile','Savon beldi','Thé à la menthe','Serviettes','Produits naturels'],
+    'Fitness':['Salle équipée','Coach disponible','Vestiaires','Douches','Casiers','WiFi'],
+    'Yoga':['Tapis fourni','Instructeur','Espace plein air','Thé offert','Vestiaires','Meditation'],
+    'Basketball':['Terrain couvert','Maillots loués','Arbitre disponible','Vestiaires','Douches','Parking'],
+    'Natation':['Piscine olympique','Couloir réservé','Casier','Serviette','Coach','Douches'],
+    'Cyclisme':['Vélo fourni','Casque','Carte parcours','Eau incluse','Guide','Assurance'],
+    "Tir à l'arc":['Arc fourni','Flèches','Instructeur','Cibles','Espace couvert','Parking'],
+    'Boxe':['Gants fournis','Protège-dents','Coach certifié','Punching-bag','Vestiaires','Ring'],
+    'Golf':['18 trous','Chariot','Coach disponible','Club loué','Driving range','Restaurant'],
+    'Escalade':['Harnais fourni','Chaussons','Instructeur','Corde','Photos','Assurance'],
+    'default':['Équipement fourni','Guide','Vestiaires','Parking','Assurance','Support 24h']
+  };
+  const am = amenMap[s.type] || amenMap['default'];
+  document.getElementById('detailContent').innerHTML=`
+  <div class="ph"><div class="ph-inner">
+    <div class="bc">
+      <span onclick="showPage('home')">Accueil</span><i class="fas fa-chevron-right"></i>
+      <span onclick="showPage('sports')">Sports</span><i class="fas fa-chevron-right"></i>
+      <span>${s.name}</span>
+    </div>
+    <h1>${s.name}</h1>
+    <p>${s.city} · ${s.type} · ${s.loc}</p>
+  </div></div>
+  <div class="det-wrap">
+    <div class="gallery">
+      ${(()=>{const sportImgs=[s.img,'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1554068865-24cecd4e34b8?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80','https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=800&q=80'];return sportImgs.map((img,i)=>`<div class="gi" onclick="openLB(${JSON.stringify(sportImgs)},${i})"><img src="${img}" alt="" style="height:100%;width:100%;object-fit:cover">${i===4?'<div class="gi-more">+3 photos</div>':''}</div>`).join('');})()}
+    </div>
+    <div class="det-layout">
+      <div>
+        <div class="det-city"><i class="fas fa-map-marker-alt"></i> ${s.city} · ${s.type}</div>
+        <h1 class="det-name">${s.name}</h1>
+        <div class="det-meta">
+          <div class="det-rating"><i class="fas fa-star"></i> ${s.rating}</div>
+          <span style="font-size:13px;color:var(--muted)">Activité vérifiée VistaMorocco</span>
+          <span class="c-badge" style="position:static">${s.type}</span>
+        </div>
+        <div class="c-tags" style="margin-bottom:16px">
+          <span class="tag">${s.city}</span>
+          <span class="tag">${s.type}</span>
+          <span class="tag">${s.loc}</span>
+        </div>
+        <p class="det-desc">
+          Activité ${s.type.toLowerCase()} de qualité à ${s.city}, idéalement situé à ${s.loc}.
+          Équipement professionnel, encadrement expert et expérience inoubliable garantis.
+          Réservation flexible — annulation gratuite jusqu'à 24h avant.
+        </p>
+        <div class="det-sec">
+          <h3 class="det-sec-title">Ce qui est inclus</h3>
+          <div class="am-grid">${am.map(a=>`<div class="am"><i class="fas fa-check-circle"></i> ${a}</div>`).join('')}</div>
+        </div>
+        ${s.type==='Football'?`<div onclick="openLineUp()" style="cursor:pointer;display:flex;align-items:center;gap:20px;background:linear-gradient(135deg,#071a0b,#0a2410);border:1.5px solid rgba(0,200,83,.3);border-radius:16px;padding:20px 24px;margin-bottom:24px;transition:all .3s" onmouseover="this.style.borderColor='rgba(0,200,83,.7)'" onmouseout="this.style.borderColor='rgba(0,200,83,.3)'">
+          <div style="font-size:36px">⚽</div>
+          <div style="flex:1"><div style="font-size:10px;color:#00c853;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px">Outil interactif</div><div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff">Créer ma formation</div><div style="font-size:12px;color:rgba(255,255,255,.45);margin-top:2px">Composez votre équipe · Drag & Drop · Export PNG</div></div>
+          <div style="background:linear-gradient(135deg,#00c853,#007c33);color:#000;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1px;padding:10px 18px;border-radius:10px;white-space:nowrap">Ouvrir →</div>
+        </div>`:''}
+        <div class="det-sec">
+          <h3 class="det-sec-title">Informations pratiques</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="padding:14px;border-radius:10px;border:1px solid var(--border);background:#fff">
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Localisation</div>
+              <div style="font-weight:600;color:var(--midnight)">${s.loc}, ${s.city}</div>
+            </div>
+            <div style="padding:14px;border-radius:10px;border:1px solid var(--border);background:#fff">
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Type d'activité</div>
+              <div style="font-weight:600;color:var(--midnight)">${s.type}</div>
+            </div>
+            <div style="padding:14px;border-radius:10px;border:1px solid var(--border);background:#fff">
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Note</div>
+              <div style="font-weight:700;color:var(--gold)">${'★'.repeat(Math.floor(s.rating))} ${s.rating}/5</div>
+            </div>
+            <div style="padding:14px;border-radius:10px;border:1px solid var(--border);background:#fff">
+              <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">Statut</div>
+              <div style="font-weight:600;color:var(--green)"><i class="fas fa-check-circle"></i> Disponible</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="bw">
+          <div class="bw-price"><span class="bw-pval">${s.price.toLocaleString()}</span><span class="bw-punit"> ${s.unit}</span></div>
+          <div class="bw-rating"><i class="fas fa-star" style="color:var(--gold)"></i> ${s.rating} · Activité vérifiée</div>
+          <div style="background:var(--sand);border-radius:10px;padding:14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:8px">Inclus dans le tarif</div>
+            ${am.slice(0,4).map(a=>`<div style="font-size:13px;color:var(--midnight);padding:3px 0;display:flex;align-items:center;gap:6px"><i class="fas fa-check" style="color:var(--green);font-size:10px"></i>${a}</div>`).join('')}
+          </div>
+          <button class="btn-book-now" onclick="openSportBooking('${s.id}')">
+            <i class="fas fa-calendar-check"></i> Réserver maintenant
+          </button>
+          <p class="w-note"><i class="fas fa-shield-alt" style="color:var(--green)"></i> Annulation gratuite 24h avant</p>
+          ${s.type==='Football'?'<button onclick="openLineUp()" style="width:100%;margin-top:12px;padding:13px;border-radius:12px;border:2px solid #00c853;background:linear-gradient(135deg,#071a0b,#0a2410);color:#00c853;font-family:Bebas Neue,sans-serif;font-size:17px;letter-spacing:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">⚽ Créer ma formation</button>':''}
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;color:var(--muted);text-align:center">
+            <i class="fas fa-phone" style="color:var(--terra)"></i> Besoin d'aide ? <a href="#" style="color:var(--terra);text-decoration:none">Contactez-nous</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+  showPage('detail');
+}
+
+function filterSportsCity(city,btn){
+  spCityFilter=city;
+  document.querySelectorAll('#sportsCityFilter .comp-badge').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderSports();
+}
+
+function filterSportsType(type,btn){
+  spTypeFilter=type;
+  document.querySelectorAll('#sportsTypeFilter .comp-badge').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderSports();
+}
+
+function openSportBooking(sid){
+  const s=SPORTS.find(x=>x.id===sid);
+  if(!s){showToast('Activité introuvable');return;}
+  bkItem={id:sid,name:s.name,city:s.city,cat:s.type,price:s.price,img:s.img,isSport:true,unit:s.unit,isFootball:s.type==='Football'};
+  bkTotal=s.price;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  const setS=(id,v)=>{const el=document.getElementById(id);if(el)el.src=v;};
+  set('bkTitle',s.name);
+  setS('bkImg',s.img);
+  set('bkName',s.name);
+  set('bkLoc',s.city+' · '+s.type+' · '+s.loc);
+  set('bkPriceLbl',s.price.toLocaleString()+' '+s.unit);
+  set('bkTotal2',s.price.toLocaleString()+' '+s.unit);
+  const pb=document.getElementById('bkPB');
+  if(pb){
+    pb.style.display='block';
+    set('pbN','Tarif '+s.type);
+    set('pbNC',s.price.toLocaleString()+' '+s.unit);
+    set('pbF','Inclus');
+    set('pbT',s.price.toLocaleString()+' '+s.unit);
+  }
+  // Show/hide football lineup section in booking
+  const fbSection=document.getElementById('bkFootballSection');
+  if(fbSection) fbSection.style.display=s.type==='Football'?'block':'none';
+  resetBkSteps();
+  openModal('bookingModal');
+}
+
+// ═══ BOOKING ═══
+let bkPlayers=[];
+function bkAddPlayer(){
+  const id=Date.now();
+  bkPlayers.push({id,name:'',num:bkPlayers.length+1,pos:'MID'});
+  bkRenderPlayers();
+}
+function bkRemovePlayer(id){bkPlayers=bkPlayers.filter(p=>p.id!==id);bkRenderPlayers();}
+function bkRenderPlayers(){
+  const list=document.getElementById('bkPlayersList');
+  if(!list)return;
+  list.innerHTML=bkPlayers.map(p=>`<div style="display:grid;grid-template-columns:1fr 56px 80px 32px;gap:6px;align-items:center;margin-bottom:4px"><input type="text" value="${p.name}" placeholder="Nom du joueur" onchange="bkPlayers.find(x=>x.id===${p.id}).name=this.value" style="padding:8px 10px;border-radius:8px;border:1.5px solid rgba(0,200,83,.2);background:rgba(255,255,255,.05);color:#fff;font-family:Jost,sans-serif;font-size:13px;outline:none"><input type="number" value="${p.num}" min="1" max="99" onchange="bkPlayers.find(x=>x.id===${p.id}).num=this.value" style="padding:8px 6px;border-radius:8px;border:1.5px solid rgba(0,200,83,.2);background:rgba(255,255,255,.05);color:#fff;font-family:Jost,sans-serif;font-size:13px;outline:none;text-align:center"><select onchange="bkPlayers.find(x=>x.id===${p.id}).pos=this.value" style="padding:8px 6px;border-radius:8px;border:1.5px solid rgba(0,200,83,.2);background:#0d2018;color:#fff;font-family:Jost,sans-serif;font-size:12px;outline:none"><option ${p.pos==='GK'?'selected':''}>GK</option><option ${p.pos==='DEF'?'selected':''}>DEF</option><option ${p.pos==='MID'?'selected':''}>MID</option><option ${p.pos==='FWD'?'selected':''}>FWD</option></select><button onclick="bkRemovePlayer(${p.id})" style="background:rgba(255,50,50,.15);border:none;border-radius:8px;color:#ff5555;cursor:pointer;font-size:14px;padding:8px 0">✕</button></div>`).join('');
+}
+function openBooking(id){
+  if(!currentUser){openAuth('login');showToast('Connectez-vous pour réserver');return;}
+  const item=DB.find(x=>x.id===id);
+  if(!item)return;
+  bkItem=item;
+  document.getElementById('bkTitle').textContent=item.name;
+  document.getElementById('bkImg').src=item.img;
+  document.getElementById('bkName').textContent=item.name;
+  document.getElementById('bkLoc').textContent=item.city+' · '+item.cat;
+  document.getElementById('bkPriceLbl').textContent=item.price.toLocaleString()+' MAD / nuit';
+  resetBkSteps();
+  calcBk();
+  openModal('bookingModal');
+}
+
+function resetBkSteps(){
+  [1,2,3].forEach(n=>{
+    document.getElementById('bp'+n).classList.toggle('on',n===1);
+    const bs=document.getElementById('bs'+n);
+    bs.classList.remove('on','done');
+    if(n===1)bs.classList.add('on');
+  });
+}
+
+function calcBk(){
+  if(!bkItem||!bkItem.price||typeof bkItem.price!=='number')return;
+  if(bkItem.isSport) return; // Sport pricing already set in openSportBooking
+  const ci=new Date(document.getElementById('bkIn').value);
+  const co=new Date(document.getElementById('bkOut').value);
+  const pb=document.getElementById('bkPB');
+  if(isNaN(ci)||isNaN(co)||co<=ci){if(pb)pb.style.display='none';return;}
+  const n=Math.round((co-ci)/864e5);
+  const base=bkItem.price*n,fees=Math.round(base*.12),tot=base+fees;
+  bkTotal=tot;
+  if(pb)pb.style.display='block';
+  const s=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  s('pbN',`${bkItem.price.toLocaleString()} MAD × ${n} nuit${n>1?'s':''}`);
+  s('pbNC',base.toLocaleString()+' MAD'); s('pbF',fees.toLocaleString()+' MAD');
+  s('pbT',tot.toLocaleString()+' MAD');
+  s('bkTotal2',tot.toLocaleString()+' MAD');
+}
+
+function bkNext(){
+  const ci=document.getElementById('bkIn').value,co=document.getElementById('bkOut').value;
+  if(!bkItem?.isSport && (!ci||!co||new Date(co)<=new Date(ci))){showToast('Sélectionnez des dates valides');return;}
+  document.getElementById('bp1').classList.remove('on');
+  document.getElementById('bp2').classList.add('on');
+  document.getElementById('bs1').classList.remove('on');document.getElementById('bs1').classList.add('done');
+  document.getElementById('bs2').classList.add('on');
+}
+
+function selPay(el,m){
+  document.querySelectorAll('.pm').forEach(p=>p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('cardFlds').style.display=m==='card'?'block':'none';
+}
+
+function processPayment(){
+  const btn=document.getElementById('payBtn');
+  btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Traitement en cours...';
+  btn.disabled=true;
+  setTimeout(()=>{
+    btn.innerHTML='<i class="fas fa-lock"></i> Payer maintenant';btn.disabled=false;
+    document.getElementById('bp2').classList.remove('on');
+    document.getElementById('bp3').classList.add('on');
+    document.getElementById('bs2').classList.remove('on');document.getElementById('bs2').classList.add('done');
+    document.getElementById('bs3').classList.add('on');
+    const ref='VM-'+Date.now().toString(36).toUpperCase().slice(-6);
+    document.getElementById('confRef').textContent=ref;
+    const ci=document.getElementById('bkIn').value,co=document.getElementById('bkOut').value;
+    document.getElementById('confDetails').innerHTML=`
+      ${bkItem?.isSport ? '⚽' : '🏨'} <strong>${bkItem?.name||''}</strong><br>
+      📍 ${bkItem?.city||''}<br>
+      ${bkItem?.isSport ? '🏆 '+bkItem.cat : '📅 '+ci+' → '+co}<br>
+      👥 ${document.getElementById('bkGuests').value}<br>
+      💳 Total payé : <strong style="color:var(--terra)">${bkTotal.toLocaleString()} MAD</strong>`;
+    showToast('✅ Réservation confirmée ! Email envoyé.','ok');
+  },2000);
+}
+
+// ═══ AUTH ═══
+function openAuth(tab='login'){switchAuth(tab);openModal('authModal');}
+function switchAuth(tab){
+  document.getElementById('atLogin').classList.toggle('on',tab==='login');
+  document.getElementById('atReg').classList.toggle('on',tab==='register');
+  document.getElementById('formLogin').style.display=tab==='login'?'block':'none';
+  document.getElementById('formReg').style.display=tab==='register'?'block':'none';
+}
+function doLogin(){
+  const email=document.getElementById('lEmail').value.trim();
+  const pwd=document.getElementById('lPwd').value;
+  if(!email.includes('@')){showToast('Email invalide');return;}
+  if(pwd.length<4){showToast('Mot de passe requis');return;}
+  const stored=JSON.parse(localStorage.getItem('vm_reg')||'null');
+  currentUser=stored&&stored.email===email?stored:{firstName:email.split('@')[0],email};
+  localStorage.setItem('vm_user',JSON.stringify(currentUser));
+  closeModal('authModal');updateNav();showToast(`Bienvenue, ${currentUser.firstName}! 👋`,'ok');
+}
+function doRegister(){
+  const first=document.getElementById('rFirst').value.trim();
+  const email=document.getElementById('rEmail').value.trim();
+  const pwd=document.getElementById('rPwd').value;
+  if(!first){showToast('Prénom requis');return;}
+  if(!email.includes('@')){showToast('Email invalide');return;}
+  if(pwd.length<8){showToast('Mot de passe : min. 8 caractères');return;}
+  currentUser={firstName:first,lastName:document.getElementById('rLast').value.trim(),email};
+  localStorage.setItem('vm_user',JSON.stringify(currentUser));
+  localStorage.setItem('vm_reg',JSON.stringify(currentUser));
+  closeModal('authModal');updateNav();showToast(`Bienvenue, ${first}! Compte créé 🎉`,'ok');
+}
+function socialLogin(p){
+  currentUser={firstName:p==='Google'?'Mohammed':'Yasmine',email:`user@${p.toLowerCase()}.com`};
+  localStorage.setItem('vm_user',JSON.stringify(currentUser));
+  closeModal('authModal');updateNav();showToast(`Connexion ${p} réussie! 🎉`,'ok');
+}
+function updateNav(){
+  const a=document.getElementById('navActions');
+  if(!a)return;
+  if(currentUser){
+    a.innerHTML=`<div class="user-badge"><div class="user-av">${currentUser.firstName[0].toUpperCase()}</div><span class="user-nm">${currentUser.firstName}</span></div>
+    <button class="btn-ghost" onclick="logout()" style="font-size:12px">Déconnexion</button>`;
+  }
+}
+function logout(){currentUser=null;localStorage.removeItem('vm_user');document.getElementById('navActions').innerHTML='<button class="btn-ghost" onclick="openAuth(\'login\')">Connexion</button><button class="btn-primary" onclick="openAuth(\'register\')">S\'inscrire</button>';showToast('Déconnecté');}
+function chkPwd(v){let s=0;if(v.length>=8)s++;if(/[A-Z]/.test(v))s++;if(/[0-9]/.test(v))s++;if(/[^A-Za-z0-9]/.test(v))s++;const f=document.getElementById('pwdFill');if(!f)return;const lvl=[['#e74c3c','20%'],['#e67e22','45%'],['#f1c40f','70%'],['#2d7a4f','100%']];const[c,w]=lvl[Math.min(s,3)];f.style.width=v.length?w:'0%';f.style.background=c;}
+
+// ═══ UTILS ═══
+function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+function closeOv(e,id){if(e.target.id===id)closeModal(id);}
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.className='toast'+(type?' '+type:'');t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+function fmtCard(i){let v=i.value.replace(/\D/g,'').slice(0,16);i.value=v.match(/.{1,4}/g)?.join(' ')||v;}
+function fmtExp(i){let v=i.value.replace(/\D/g,'').slice(0,4);if(v.length>=2)v=v.slice(0,2)+'/'+v.slice(2);i.value=v;}
+
+// ═══ CARS DATA ═══
+const CARS = [
+  {id:'c1',name:'Dacia Sandero',type:'Citadine',city:'Casablanca',price:180,unit:'MAD/j',rating:4.6,seats:5,fuel:'Essence',transmission:'Manuelle',img:'https://images.unsplash.com/photo-1541443131876-a80aafd5d9d8?auto=format&fit=crop&w=600&q=80',badge:'Économique',tags:['Clim','Bluetooth','GPS']},
+  {id:'c2',name:'Renault Clio',type:'Citadine',city:'Marrakech',price:200,unit:'MAD/j',rating:4.7,seats:5,fuel:'Essence',transmission:'Automatique',img:'https://images.unsplash.com/photo-1609752439401-c84d1b34c5e4?auto=format&fit=crop&w=600&q=80',badge:'Top vente',tags:['Clim','USB','Caméra recul']},
+  {id:'c3',name:'Dacia Duster',type:'SUV',city:'Agadir',price:350,unit:'MAD/j',rating:4.8,seats:5,fuel:'Diesel',transmission:'Manuelle',img:'https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=600&q=80',badge:'4x4 Piste',tags:['4x4','Clim','GPS','Grand coffre']},
+  {id:'c4',name:'Toyota Land Cruiser',type:'SUV',city:'Merzouga',price:800,unit:'MAD/j',rating:4.9,seats:7,fuel:'Diesel',transmission:'Automatique',img:'https://images.unsplash.com/photo-1567818735868-e71b99932e29?auto=format&fit=crop&w=600&q=80',badge:'Sahara Ready',tags:['4x4','7 places','GPS','Frigo']},
+  {id:'c5',name:'Mercedes Classe E',type:'Berline',city:'Casablanca',price:650,unit:'MAD/j',rating:4.8,seats:5,fuel:'Essence',transmission:'Automatique',img:'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=600&q=80',badge:'Premium',tags:['Luxe','Clim','Cuir','Chauffeur dispo']},
+  {id:'c6',name:'BMW Série 5',type:'Berline',city:'Rabat',price:700,unit:'MAD/j',rating:4.9,seats:5,fuel:'Essence',transmission:'Automatique',img:'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=600&q=80',badge:'Coup de cœur',tags:['Luxe','Toit ouvrant','Cuir','Sound system']},
+  {id:'c7',name:'Porsche Cayenne',type:'SUV',city:'Marrakech',price:1200,unit:'MAD/j',rating:5.0,seats:5,fuel:'Essence',transmission:'Automatique',img:'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',badge:'Prestige',tags:['Luxe','Sport','Panoramique','360°']},
+  {id:'c8',name:'Ford Mustang Cabriolet',type:'Sportive',city:'Agadir',price:900,unit:'MAD/j',rating:4.9,seats:4,fuel:'Essence',transmission:'Automatique',img:'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=600&q=80',badge:'Cabriolet 🌞',tags:['Cabriolet','V8','Son Racing','Photo shoot']},
+  {id:'c9',name:'Mercedes Vito',type:'Utilitaire',city:'Fès',price:450,unit:'MAD/j',rating:4.6,seats:8,fuel:'Diesel',transmission:'Manuelle',img:'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=600&q=80',badge:'Groupe',tags:['8 places','Grand coffre','Clim','GPS']},
+  {id:'c10',name:'Peugeot 208',type:'Citadine',city:'Fès',price:170,unit:'MAD/j',rating:4.5,seats:5,fuel:'Essence',transmission:'Manuelle',img:'https://images.unsplash.com/photo-1592853598064-d6b0d028a905?auto=format&fit=crop&w=600&q=80',badge:'Économique',tags:['Clim','Bluetooth','Faible conso']},
+  {id:'c11',name:'Audi Q7',type:'SUV',city:'Casablanca',price:950,unit:'MAD/j',rating:4.9,seats:7,fuel:'Diesel',transmission:'Automatique',img:'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=600&q=80',badge:'VIP',tags:['7 places','Luxe','360°','Massage']},
+  {id:'c12',name:'Renault Kangoo',type:'Utilitaire',city:'Rabat',price:280,unit:'MAD/j',rating:4.4,seats:2,fuel:'Diesel',transmission:'Manuelle',img:'https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=600&q=80',badge:'Utilitaire',tags:['Grand volume','Hayon','Fiable']},
+];
+
+let carTypeActive = '';
+
+function renderCars(){
+  const data = carTypeActive ? CARS.filter(c=>c.type===carTypeActive) : CARS;
+  const g = document.getElementById('carsGrid');
+  if(!g) return;
+  g.innerHTML = data.map(c=>{
+    const stars = '★'.repeat(Math.floor(c.rating));
+    return `<div class="card" onclick="openCarDetail('${c.id}')">
+      <div class="card-img">
+        <img src="${c.img}" alt="${c.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1541443131876-a80aafd5d9d8?auto=format&fit=crop&w=600&q=80'">
+        <span class="c-badge">${c.badge}</span>
+        <div style="position:absolute;bottom:10px;left:12px;display:flex;gap:6px">
+          <span style="background:rgba(0,0,0,.65);color:#fff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px">👥 ${c.seats} places</span>
+          <span style="background:rgba(0,0,0,.65);color:#fff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px">⛽ ${c.fuel}</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="c-city"><i class="fas fa-map-marker-alt"></i> ${c.city} · ${c.type}</div>
+        <div class="c-name">${c.name}</div>
+        <div class="c-rating"><span class="c-stars">${stars}</span><span class="c-rnum">${c.rating}</span><span class="c-rcnt">${c.transmission}</span></div>
+        <div class="c-tags">${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        <div class="card-foot">
+          <div><div class="c-pfrom">À partir de</div><span class="c-price">${c.price.toLocaleString()}</span><span class="c-punit"> ${c.unit}</span></div>
+          <button class="btn-rsv" onclick="event.stopPropagation();openCarBooking('${c.id}')">Louer</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterCarType(type, btn){
+  carTypeActive = type;
+  document.querySelectorAll('#carTypeFilter .comp-badge').forEach(b=>b.classList.remove('on'));
+  if(btn) btn.classList.add('on');
+  renderCars();
+}
+
+function openCarDetail(cid){
+  const c = CARS.find(x=>x.id===cid);
+  if(!c) return;
+  showToast(`🚗 ${c.name} — ${c.price} ${c.unit}`,'ok');
+  openCarBooking(cid);
+}
+
+function openCarBooking(cid){
+  const c = CARS.find(x=>x.id===cid);
+  if(!c){showToast('Voiture introuvable');return;}
+  bkItem={id:cid,name:c.name,city:c.city,cat:'Location Voitures',price:c.price,img:c.img,isSport:true,unit:c.unit};
+  bkTotal=c.price;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  const setS=(id,v)=>{const el=document.getElementById(id);if(el)el.src=v;};
+  set('bkTitle','Location — '+c.name);
+  setS('bkImg',c.img);
+  set('bkName',c.name);
+  set('bkLoc',c.city+' · '+c.type+' · '+c.transmission);
+  set('bkPriceLbl',c.price.toLocaleString()+' '+c.unit);
+  const pb=document.getElementById('bkPB');
+  if(pb){
+    pb.style.display='block';
+    set('pbN','Tarif journalier');
+    set('pbNC',c.price.toLocaleString()+' '+c.unit);
+    set('pbF','Assurance incluse');
+    set('pbT',c.price.toLocaleString()+' '+c.unit);
+  }
+  set('bkTotal2',c.price.toLocaleString()+' '+c.unit);
+  resetBkSteps();
+  openModal('bookingModal');
+}
+
+// ═══ CAR WASH ═══
+let cwExtra = 0;
+function openCarWash(){ document.getElementById('carWashModal').style.display='block'; document.body.style.overflow='hidden'; updateCWPrice(); }
+function closeCarWash(){ document.getElementById('carWashModal').style.display='none'; document.body.style.overflow=''; }
+function selectCWFormula(el, extra){
+  cwExtra = extra;
+  document.querySelectorAll('.cw-formula').forEach(f=>{ f.style.border='1.5px solid rgba(255,255,255,.1)'; f.style.background='rgba(255,255,255,.04)'; });
+  el.style.border='1.5px solid #1e88e5'; el.style.background='rgba(30,136,229,.12)';
+  updateCWPrice();
+}
+function updateCWPrice(){
+  const base = parseInt(document.getElementById('cwVehicle')?.value||150) + cwExtra;
+  const el1=document.getElementById('cwPriceBase'), el2=document.getElementById('cwPriceTotal');
+  if(el1) el1.textContent = base + ' MAD';
+  if(el2) el2.textContent = base + ' MAD';
+}
+function bookCarWash(){
+  const addr=document.getElementById('cwAddress')?.value.trim();
+  const date=document.getElementById('cwDate')?.value.trim();
+  if(!addr){showToast('Entrez votre adresse');return;}
+  if(!date){showToast('Entrez la date souhaitée');return;}
+  showToast('✅ Lavage réservé ! Notre technicien vous contacte.','ok');
+  setTimeout(()=>closeCarWash(),1800);
+}
+
+// ═══ PWA INSTALL ═══
+let deferredPrompt = null;
+
+// Detect iOS
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if(!localStorage.getItem('vm_pwa_dismissed') && !isInStandalone) {
+    setTimeout(()=>{ const b=document.getElementById('pwa-banner'); if(b) b.classList.add('show'); }, 2000);
+  }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  if(!localStorage.getItem('vm_pwa_dismissed') && !isInStandalone) {
+    // Show for iOS (no beforeinstallprompt) or as fallback after splash
+    setTimeout(()=>{
+      const b=document.getElementById('pwa-banner');
+      if(b && !b.classList.contains('show')) b.classList.add('show');
+    }, 3200);
+  }
+});
+
+function installPWA(){
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(r=>{
+      if(r.outcome==='accepted'){
+        showToast('✅ VistaMorocco installée avec succès !','ok');
+        dismissPWA();
+      }
+      deferredPrompt=null;
+    });
+  } else if(isIOS){
+    // iOS instructions
+    showToast("📲 Appuyez sur 􀈂 puis 'Sur l'écran d'accueil'", 'ok');
+    setTimeout(()=>dismissPWA(), 4000);
+  } else {
+    showToast("📲 Menu navigateur → 'Installer l'application'", 'ok');
+    setTimeout(()=>dismissPWA(), 4000);
+  }
+}
+
+function dismissPWA(){
+  const b=document.getElementById('pwa-banner');
+  if(b){
+    b.style.transition='all .35s ease';
+    b.style.opacity='0';
+    b.style.transform='translateY(10px) scale(.97)';
+    setTimeout(()=>b.classList.remove('show'),350);
+  }
+  localStorage.setItem('vm_pwa_dismissed','1');
+}
+
+window.addEventListener('appinstalled', ()=>{
+  showToast('🎉 VistaMorocco installée !','ok');
+  dismissPWA();
+});
+
+// ═══ LINEUP ═══
+let luP=[
+  {id:1,name:'خالد',num:1,pos:'GK',color:'#c62828',img:null,x:50,y:87,cap:false},
+  {id:2,name:'يوسف',num:2,pos:'DEF',color:'#1565c0',img:null,x:25,y:67,cap:false},
+  {id:3,name:'عمر',num:5,pos:'DEF',color:'#1565c0',img:null,x:75,y:67,cap:false},
+  {id:4,name:'كريم',num:7,pos:'MID',color:'#1565c0',img:null,x:25,y:40,cap:false},
+  {id:5,name:'أنس',num:8,pos:'MID',color:'#1565c0',img:null,x:75,y:40,cap:false},
+  {id:6,name:'سامي',num:10,pos:'FWD',color:'#1565c0',img:null,x:50,y:16,cap:true},
+];
+let luB=[{id:7,name:'رضا',num:5,img:null},{id:8,name:'فيصل',num:11,img:null}];
+let luNid=9,luActiv=null,luUpId=null,luUpType='p',luColor='#1565c0';
+const luForms={'1-2-2':[{x:50,y:87},{x:26,y:66},{x:74,y:66},{x:26,y:38},{x:74,y:38},{x:50,y:14}],'1-1-2-1':[{x:50,y:87},{x:50,y:68},{x:26,y:46},{x:74,y:46},{x:50,y:26},{x:50,y:12}],'1-3-1':[{x:50,y:87},{x:22,y:60},{x:50,y:56},{x:78,y:60},{x:50,y:28},{x:50,y:12}],'1-1-3':[{x:50,y:87},{x:50,y:67},{x:18,y:40},{x:50,y:35},{x:82,y:40},{x:50,y:14}],'1-2-1-1':[{x:50,y:87},{x:26,y:68},{x:74,y:68},{x:50,y:50},{x:50,y:28},{x:50,y:12}],'diamond':[{x:50,y:87},{x:50,y:70},{x:20,y:50},{x:80,y:50},{x:50,y:30},{x:50,y:12}]};
+
+function luRender(){luRenderPitch();luRenderList();luRenderBench();}
+
+function luRenderPitch(){
+  const layer=document.getElementById('lu-players');if(!layer)return;
+  layer.innerHTML='';
+  luP.forEach(p=>{
+    const el=document.createElement('div');
+    el.className='lu-player'+(p.id===luActiv?' sel':'');
+    el.style.cssText=`left:${p.x}%;top:${p.y}%`;
+    el.innerHTML=`<div class="lu-pw">
+      <div class="lu-pc" style="--lc:${p.color}" onclick="luEdit(${p.id})">${p.img?`<img src="${p.img}" alt="">`:`<span style="color:#fff;font-weight:900;font-family:'Bebas Neue',sans-serif;font-size:17px">${p.name.charAt(0).toUpperCase()}</span>`}</div>
+      <div class="lu-pnum">${p.num}</div>
+      <div class="lu-pcam" onclick="luTrigUp(${p.id},'p')">📷</div>
+      ${p.cap?'<div class="lu-cap">©</div>':''}
+    </div><div class="lu-ntag">${p.name.toUpperCase()}</div>`;
+    luDrag(el,p);layer.appendChild(el);
+  });
+}
+
+function luRenderList(){
+  const list=document.getElementById('lu-list');if(!list)return;
+  list.innerHTML='';
+  luP.forEach(p=>{
+    const d=document.createElement('div');
+    d.className='lu-pli'+(p.id===luActiv?' on':'');
+    d.innerHTML=`<div class="lu-pnum2">${p.num}</div>
+    <div class="lu-pphoto" onclick="luTrigUp(${p.id},'p')">${p.img?`<img src="${p.img}" alt="">`:p.name.charAt(0)}</div>
+    <div class="lu-pinfo"><input type="text" class="lu-pname" value="${p.name}" onchange="luSetName(${p.id},this.value)" onclick="luSel(${p.id})"><div class="lu-ppos">${p.pos}</div></div>
+    <div class="lu-pbtns">
+      <button class="lu-pb cap${p.cap?' on':''}" onclick="luCap(${p.id})">©</button>
+      <button class="lu-pb del" onclick="luDel(${p.id})">✕</button>
+    </div>`;
+    list.appendChild(d);
+  });
+}
+
+function luRenderBench(){
+  const row=document.getElementById('lu-bench');if(!row)return;
+  row.innerHTML='';
+  luB.forEach(p=>{
+    const el=document.createElement('div');el.className='lu-bp';
+    el.innerHTML=`<div class="lu-bph" onclick="luTrigUp(${p.id},'b')">${p.img?`<img src="${p.img}" alt="">`:p.name.charAt(0)}</div><div class="lu-bnm">${p.name}</div>`;
+    row.appendChild(el);
+  });
+}
+
+function luDrag(el,player){
+  let drag=false;
+  const gp=e=>{const t=e.touches?e.touches[0]:e;return{cx:t.clientX,cy:t.clientY};};
+  const down=e=>{e.preventDefault();drag=true;luSel(player.id);document.addEventListener('mousemove',move);document.addEventListener('touchmove',move,{passive:false});document.addEventListener('mouseup',up);document.addEventListener('touchend',up);};
+  const move=e=>{if(!drag)return;e.preventDefault();const{cx,cy}=gp(e);const pitch=document.getElementById('lu-pitch').getBoundingClientRect();player.x=Math.max(6,Math.min(94,((cx-pitch.left)/pitch.width)*100));player.y=Math.max(6,Math.min(94,((cy-pitch.top)/pitch.height)*100));el.style.left=player.x+'%';el.style.top=player.y+'%';};
+  const up=()=>{drag=false;document.removeEventListener('mousemove',move);document.removeEventListener('touchmove',move);document.removeEventListener('mouseup',up);document.removeEventListener('touchend',up);};
+  el.addEventListener('mousedown',down);el.addEventListener('touchstart',down,{passive:false});
+}
+
+function luSel(id){luActiv=id;luRenderList();luRenderPitch();}
+function luSetName(id,v){const p=luP.find(x=>x.id===id);if(p){p.name=v;luRenderPitch();}}
+function luCap(id){luP.forEach(p=>p.cap=false);const p=luP.find(x=>x.id===id);if(p)p.cap=true;luRender();}
+function luDel(id){luP=luP.filter(x=>x.id!==id);if(luActiv===id)luActiv=null;luRender();}
+function luAddPlayer(){const id=luNid++;luP.push({id,name:'لاعب',num:id,pos:'MID',color:luColor,img:null,x:50,y:50,cap:false});luRender();luSel(id);}
+function luAddBench(){const id=luNid++;luB.push({id,name:'احتياطي',num:id,img:null});luRenderBench();}
+function luSetForm(key,btn){document.querySelectorAll('.lu-form-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');const pos=luForms[key];if(!pos)return;luP.forEach((p,i)=>{if(pos[i]){p.x=pos[i].x;p.y=pos[i].y;}});luRenderPitch();}
+function luSetColor(c,el){luColor=c;document.querySelectorAll('.lu-sw').forEach(s=>s.classList.remove('on'));el.classList.add('on');if(luActiv){const p=luP.find(x=>x.id===luActiv);if(p){p.color=c;luRenderPitch();}}}
+function luUpdateTeam(t){const v=document.getElementById('lu-t'+t)?.value;const el=document.getElementById('lu-td'+t);if(el)el.textContent=v;}
+function luUpdateInfo(){const g=id=>document.getElementById(id)?.value||'';const s=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};s('lu-bDate',g('lu-date'));s('lu-bVenue',g('lu-venue'));s('lu-bComp',g('lu-comp'));}
+function luEdit(id){const p=luP.find(x=>x.id===id);if(!p)return;const n=prompt('اسم اللاعب:',p.name);if(n!=null)p.name=n.trim()||p.name;const num=prompt('رقم:',p.num);if(num!=null&&!isNaN(num))p.num=parseInt(num)||p.num;const pos=prompt('المنصب (GK/DEF/MID/FWD):',p.pos);if(pos!=null)p.pos=pos.trim()||p.pos;luRender();}
+function luTrigUp(id,type){luUpId=id;luUpType=type;document.getElementById('lu-upPlayer').click();}
+function luHandleImg(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{if(luUpType==='p'){const p=luP.find(x=>x.id===luUpId);if(p){p.img=ev.target.result;luRender();}}else{const p=luB.find(x=>x.id===luUpId);if(p){p.img=ev.target.result;luRenderBench();}}};r.readAsDataURL(f);e.target.value='';}
+function luUploadLogo(team){document.getElementById('lu-upLogo'+team).click();}
+function luHandleLogo(e,team){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const el=document.getElementById('lu-logo'+team);if(el)el.innerHTML=`<img src="${ev.target.result}" alt="">`;};r.readAsDataURL(f);e.target.value='';}
+function luReset(){if(!confirm('Réinitialiser ?'))return;luP.forEach(p=>{p.img=null;p.cap=false;});luSetForm('1-2-2',document.querySelector('.lu-form-btn.on')||document.querySelector('.lu-form-btn'));luRender();}
+function luExport(){if(window.html2canvas){_luExp();return;}const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';s.onload=_luExp;document.head.appendChild(s);}
+function _luExp(){html2canvas(document.getElementById('lu-pitch'),{backgroundColor:null,scale:2,useCORS:true}).then(c=>{const a=document.createElement('a');a.download='lineup.png';a.href=c.toDataURL('image/png');a.click();showToast('📸 Image sauvegardée!','ok');});}
+function luShare(){const url=location.href.split('?')[0];navigator.clipboard.writeText(url).then(()=>showToast('🔗 Lien copié!','ok'));}
+function openLineUp(){
+  const m=document.getElementById('lineupModal');
+  if(!m){showToast('Chargement en cours...');return;}
+  m.style.display='flex';
+  m.style.flexDirection='column';
+  document.body.style.overflow='hidden';
+  setTimeout(()=>{
+    const layer=document.getElementById('lu-players');
+    if(!layer||!layer.children.length){
+      const btn=document.querySelector('#lu-fgrid .lu-form-btn.on')||document.querySelector('#lu-fgrid .lu-form-btn');
+      if(btn) luSetForm('1-2-2',btn);
+      luRender();
+      luUpdateInfo();
+    }
+  },80);
+}
+function closeLineUp(){const m=document.getElementById('lineupModal');if(m)m.style.display='none';document.body.style.overflow='';}
+function initLineUp(){if(!document.getElementById('lu-players')?.children.length){const btn=document.querySelector('#lu-fgrid .lu-form-btn.on')||document.querySelector('#lu-fgrid .lu-form-btn');if(btn)luSetForm('1-2-2',btn);luRender();luUpdateInfo();}}
+
+// ═══ SERVICE WORKER (inline via Blob) ═══
+(function registerSW(){
+  if(!('serviceWorker' in navigator)) return;
+
+  const swCode = `
+const CACHE = 'vistamorocco-v1';
+const ASSETS = []; // Single HTML file — cache on first fetch
+
+self.addEventListener('install', e => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', e => {
+  // Cache-first for same-origin, network-first for external (fonts, images)
+  const url = new URL(e.request.url);
+  if(url.origin !== location.origin) {
+    // External: network with cache fallback
+    e.respondWith(
+      fetch(e.request).then(res => {
+        const clone = res.clone();
+        caches.open(CACHE).then(c => c.put(e.request, clone));
+        return res;
+      }).catch(() => caches.match(e.request))
+    );
+    return;
+  }
+  // Same-origin: cache-first
+  e.respondWith(
+    caches.match(e.request).then(cached => {
+      const network = fetch(e.request).then(res => {
+        caches.open(CACHE).then(c => c.put(e.request, res.clone()));
+        return res;
+      });
+      return cached || network;
+    })
+  );
+});
+  `;
+
+  const blob = new Blob([swCode], {type:'application/javascript'});
+  const swURL = URL.createObjectURL(blob);
+
+  navigator.serviceWorker.register(swURL, {scope: './'})
+    .then(reg => {
+      console.log('[VistaMorocco] SW registered:', reg.scope);
+    })
+    .catch(err => {
+      // Blob SW may be blocked in some browsers — silent fail is OK
+      console.log('[VistaMorocco] SW not available:', err.message);
+    });
+})();
+
+// ═══ HERO SLIDESHOW ═══
+(function initHeroSlideshow(){
+  const slides=document.querySelectorAll('.hero-slide');
+  const dotsContainer=document.getElementById('heroDots');
+  if(!slides.length||!dotsContainer)return;
+  let cur=0;
+  // Build dots
+  slides.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='hero-dot'+(i===0?' active':'');
+    d.onclick=()=>goSlide(i);
+    dotsContainer.appendChild(d);
+  });
+  function goSlide(n){
+    slides[cur].classList.remove('active');
+    document.querySelectorAll('.hero-dot')[cur].classList.remove('active');
+    cur=(n+slides.length)%slides.length;
+    slides[cur].classList.add('active');
+    document.querySelectorAll('.hero-dot')[cur].classList.add('active');
+  }
+  setInterval(()=>goSlide(cur+1),5000);
+})();
+
+// ═══ LIGHTBOX ═══
+let lbImgs=[];
+let lbIdx=0;
+function openLB(imgs,idx){
+  lbImgs=imgs; lbIdx=idx;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+  lbRender();
+  // keyboard nav
+  document.addEventListener('keydown',lbKey);
+}
+function closeLB(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+  document.removeEventListener('keydown',lbKey);
+}
+function lbNav(dir){lbIdx=(lbIdx+dir+lbImgs.length)%lbImgs.length;lbRender();}
+function lbKey(e){if(e.key==='ArrowLeft')lbNav(-1);else if(e.key==='ArrowRight')lbNav(1);else if(e.key==='Escape')closeLB();}
+function lbRender(){
+  const img=document.getElementById('lb-img');
+  img.style.opacity='0';
+  setTimeout(()=>{img.src=lbImgs[lbIdx];img.style.opacity='1';},150);
+  document.getElementById('lb-counter').textContent=(lbIdx+1)+' / '+lbImgs.length;
+  const thumbs=document.getElementById('lb-thumbs');
+  thumbs.innerHTML=lbImgs.map((src,i)=>`<img class="lb-thumb${i===lbIdx?' active':''}" src="${src}" onclick="lbIdx=${i};lbRender()">`).join('');
+}
+
+</script>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="if(event.target===this||event.target.id==='lightbox')closeLB()">
+  <button id="lb-close" onclick="closeLB()">✕</button>
+  <button class="lb-nav" id="lb-prev" onclick="lbNav(-1)">‹</button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-nav" id="lb-next" onclick="lbNav(1)">›</button>
+  <div id="lb-thumbs"></div>
+  <div id="lb-counter"></div>
+</div>
+</body>
+</html>
